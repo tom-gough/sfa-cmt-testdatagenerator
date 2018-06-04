@@ -262,5 +262,4 @@ src/Tools/PhantomJS/tools/phantomjs/ChangeLog
 *.ncrunchsolution
 *.ncrunchproject
 
-# Config
-app.config
+
