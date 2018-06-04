@@ -263,4 +263,4 @@ src/Tools/PhantomJS/tools/phantomjs/ChangeLog
 *.ncrunchproject
 
 # Config
-app.config
+*.config
