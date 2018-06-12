@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CommitmentsDataGen.Models
 {
@@ -32,6 +33,13 @@ namespace CommitmentsDataGen.Models
         public DateTime? StopDate { get; set; }
         public DateTime? PauseDate { get; set; } 
         public bool HasHadDataLockSuccess { get; set; }
+
+        public List<DataLock> DataLocks { get; set; }
+
+        public Apprenticeship()
+        {
+            DataLocks = new List<DataLock>();
+        }
 
     }
 }

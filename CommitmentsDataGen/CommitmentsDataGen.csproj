@@ -65,6 +65,7 @@
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Models\Apprenticeship.cs" />
     <Compile Include="Models\Commitment.cs" />
+    <Compile Include="Models\DataLock.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\TrainingCourse.cs" />
     <Compile Include="Program.cs" />

@@ -147,6 +147,12 @@ namespace CommitmentsDataGen.Builders
             foreach (var apprenticeship in _commitment.Apprenticeships)
             {
                 DbHelper.SaveApprenticeship(apprenticeship);
+
+
+                foreach (var datalock in apprenticeship.DataLocks)
+                {
+                    DbHelper.SaveDataLock(apprenticeship, datalock);
+                }
             }
 
             DbHelper.CreateEmployerProviderRelationship(_commitment, EmployerProviderRelationshipExists);

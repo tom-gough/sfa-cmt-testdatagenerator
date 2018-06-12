@@ -23,7 +23,7 @@ namespace CommitmentsDataGen.Generator
                 new Scenario("Approved Transfer Apprentices (Live and Waiting to Start) with Data Lock success", Generator.Scenario_Fully_Approved_Transfer_Apprentices_With_DataLock_Success),
                 new Scenario("Approved Transfer Apprentices (Live and Waiting to Start) pending Data Lock success", Generator.Scenario_Fully_Approved_Transfer_Apprentices_Pending_DataLock_Success),
                 new Scenario("Scenario_Fully_Approved_Cohort_With_Provider_Removed_From_ROATP", Generator.Scenario_Fully_Approved_Cohort_With_Provider_Removed_From_ROATP),
-                new Scenario("ITASK0109557", Generator.ITASK0109557)
+                new Scenario("PriceDataLock", Generator.PriceDataLock),
             };
         }
 

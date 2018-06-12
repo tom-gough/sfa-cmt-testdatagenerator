@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommitmentsDataGen.Helpers;
 using CommitmentsDataGen.Models;
 
@@ -12,6 +13,8 @@ namespace CommitmentsDataGen.Builders
         public TrainingCourse TrainingCourse { get; private set; }
         public int Cost { get; private set; }
         public CohortBuilder CohortBuilder { get; private set; }
+        
+        public bool HasPriceDataLock { get; private set; }
 
         public ApprenticeshipBuilder(CohortBuilder cohortBuilder)
         {
@@ -42,6 +45,12 @@ namespace CommitmentsDataGen.Builders
         public ApprenticeshipBuilder WithCost(int cost)
         {
             Cost = cost;
+            return this;
+        }
+
+        public ApprenticeshipBuilder WithPriceDataLock()
+        {
+            HasPriceDataLock = true;
             return this;
         }
 
@@ -93,6 +102,21 @@ namespace CommitmentsDataGen.Builders
                 HasHadDataLockSuccess = HasHadDataLockSuccess,
                 CreatedOn = DateTime.UtcNow
             };
+
+            //data locks
+            if (HasPriceDataLock)
+            {
+                apprenticeship.DataLocks.Add(new DataLock
+                {
+                    ErrorCode = 64,
+                    IlrEffectiveFromDate = apprenticeship.StartDate.Value,
+                    IlrTotalCost = apprenticeship.Cost * 2,
+                    IlrTrainingCourseCode = apprenticeship.TrainingCode,
+                    IlrTrainingType = apprenticeship.TrainingType,
+                    PriceEpisodeIdentifier = apprenticeship.TrainingCode + '-' + apprenticeship.StartDate.Value.ToShortDateString(),
+                    Status = 2
+                });
+            }
 
             return apprenticeship;
         }

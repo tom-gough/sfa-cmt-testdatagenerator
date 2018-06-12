@@ -242,19 +242,26 @@ namespace CommitmentsDataGen.Generator
 
         }
 
-
-        public static void ITASK0109557()
+        public static void PriceDataLock()
         {
+
             var builder = new CohortBuilder();
 
             builder
                 .WithDefaultEmployerProvider(RelationshipOption.Defined)
-                .WithEditStatus(EditStatus.Employer)
-                .WithLastAction(LastAction.Amend)
-                .WithLastUpdatedByProvider("Provider user", "Provider email")
-                .WithLastUpdatedByEmployer("Employer user", "Employer email")
-                .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithDataLockSuccess()
+                        .WithStartOption(ApprenticeshipStartedOption.Started)
+                        .WithPriceDataLock()
+                    );
             builder.Build();
+
         }
+
     }
 }

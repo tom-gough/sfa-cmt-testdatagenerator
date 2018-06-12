@@ -85,6 +85,27 @@ namespace CommitmentsDataGen.Helpers
                         "@PaymentOrder, @StopDate, @PauseDate, @HasHadDataLockSuccess)";
 
             var result = connection.Execute(query, apprenticeship);
+
+
+            //price history
+
+            if (apprenticeship.StartDate <= DateTime.Now)
+            {
+                var query2 = "insert into PriceHistory ([ApprenticeshipId],[Cost],[FromDate]) " +
+                        "VALUES (@ApprenticeshipId,@Cost,@FromDate)";
+
+                var result2 = connection.Execute(query2, new
+                {
+                    ApprenticeshipId = apprenticeship.Id,
+                    Cost = apprenticeship.Cost,
+                    FromDate = apprenticeship.StartDate
+                });
+            }
+
+            
+            
+
+
         }
 
         public static void CreateEmployerProviderRelationship(Commitment commitment, RelationshipOption verified)
@@ -160,6 +181,36 @@ namespace CommitmentsDataGen.Helpers
                 TransferApprovalActionedByEmployerEmail = "person@mail.com",
                 TransferApprovalActionedOn = default(DateTime?),
                 CreatedOn = DateTime.Now
+            });
+        }
+
+        public static void SaveDataLock(Apprenticeship apprenticeship, DataLock datalock)
+        {
+            var connection = GetConnection();
+
+            var query = "insert into DataLockStatus (DataLockEventId, DataLockEventDatetime, PriceEpisodeIdentifier," +
+                        "ApprenticeshipId, IlrTrainingCourseCode, IlrTrainingType, IlrActualStartDate, IlrEffectiveFromDate, " +
+                        "IlrTotalCost, ErrorCode, Status, TriageStatus, IsResolved, EventStatus) " +
+                        "VALUES (@DataLockEventId, @DataLockEventDatetime, @PriceEpisodeIdentifier," +
+                        "@ApprenticeshipId, @IlrTrainingCourseCode, @IlType, @IlrActualStartDate, @IlrEffectiveFromDate," +
+                        "@IlrTotalCost, @ErrorCode, @Status, @TriageStatus,  @IsResolved, @EventStatus)";
+
+            var result = connection.Execute(query, new
+            {
+                DataLockEventId = IdentityHelpers.GetNextDataLockStatusId(),
+                DataLockEventDatetime = DateTime.Now,
+                PriceEpisodeIdentifier = datalock.PriceEpisodeIdentifier,
+                ApprenticeshipId = apprenticeship.Id,
+                IlrTrainingCourseCode = datalock.IlrTrainingCourseCode,
+                IlType = datalock.IlrTrainingType,
+                IlrActualStartDate = apprenticeship.StartDate.Value,
+                IlrEffectiveFromDate = datalock.IlrEffectiveFromDate,
+                IlrTotalCost = datalock.IlrTotalCost,
+                ErrorCode = datalock.ErrorCode,
+                Status = datalock.Status,
+                TriageStatus = 0,
+                IsResolved = false,
+                EventStatus = 1
             });
         }
     }
