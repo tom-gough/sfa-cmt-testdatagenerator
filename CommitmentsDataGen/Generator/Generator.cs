@@ -1,4 +1,5 @@
-﻿using CommitmentsDataGen.Builders;
+﻿using System;
+using CommitmentsDataGen.Builders;
 using CommitmentsDataGen.Models;
 
 namespace CommitmentsDataGen.Generator
@@ -261,6 +262,41 @@ namespace CommitmentsDataGen.Generator
                     );
             builder.Build();
 
+        }
+
+        public static void ReusingUln()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2018, 6, 1))
+                        .WithEndOption(new DateTime(2019, 6, 23))
+                        .WithStopOption(new DateTime(2018, 9, 12))
+                );
+            builder.Build();
+
+
+            builder = new CohortBuilder();
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.EmployerAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.PendingApproval)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2018, 9, 1))
+                );
+            builder.Build();
         }
 
     }

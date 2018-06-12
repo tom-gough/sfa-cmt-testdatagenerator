@@ -156,5 +156,12 @@ namespace CommitmentsDataGen.Helpers
             return courses.RandomElement();
         }
 
+        public static DateTime? GetMidwayPoint(DateTime startDateValue, DateTime endDateValue)
+        {
+            var span = endDateValue - startDateValue;
+            var mid = span.Days / 2;
+
+            return startDateValue.AddDays(mid);
+        }
     }
 }

@@ -9,9 +9,14 @@ namespace CommitmentsDataGen.Builders
     {
         public long Id { get; private set; }
         public ApprenticeshipStartedOption Started { get; private set; }
+        public DateTime? ExplicitStartDate { get; private set; }
+        public DateTime? ExplicitEndDate { get; private set; }
+        public DateTime? ExplicitStopDate { get; private set; }
+        public ApprenticeshipStopOption Stopped { get; private set; }
         public bool HasHadDataLockSuccess { get; private set; }
         public TrainingCourse TrainingCourse { get; private set; }
         public int Cost { get; private set; }
+        public string Uln { get; private set; }
         public CohortBuilder CohortBuilder { get; private set; }
         
         public bool HasPriceDataLock { get; private set; }
@@ -21,6 +26,7 @@ namespace CommitmentsDataGen.Builders
             CohortBuilder = cohortBuilder;
             Id = IdentityHelpers.GetNextApprenticeshipId();
             Started = ApprenticeshipStartedOption.Random;
+            Stopped = ApprenticeshipStopOption.NotStopped;
             Cost = 2000;
         }
 
@@ -36,6 +42,29 @@ namespace CommitmentsDataGen.Builders
             return this;
         }
 
+        public ApprenticeshipBuilder WithStartOption(DateTime startDate)
+        {
+            ExplicitStartDate = startDate;
+            return this;
+        }
+
+        public ApprenticeshipBuilder WithEndOption(DateTime endDate)
+        {
+            ExplicitEndDate = endDate;
+            return this;
+        }
+
+        public ApprenticeshipBuilder WithStopOption(ApprenticeshipStopOption stopOption)
+        {
+            Stopped = stopOption;
+            return this;
+        }
+        public ApprenticeshipBuilder WithStopOption(DateTime stopDate)
+        {
+            ExplicitStopDate = stopDate;
+            return this;
+        }
+
         public ApprenticeshipBuilder WithTrainingCourse(TrainingCourse course)
         {
             TrainingCourse = course;
@@ -48,6 +77,12 @@ namespace CommitmentsDataGen.Builders
             return this;
         }
 
+        public ApprenticeshipBuilder WithUln(string uln)
+        {
+            Uln = uln;
+            return this;
+        }
+
         public ApprenticeshipBuilder WithPriceDataLock()
         {
             HasPriceDataLock = true;
@@ -56,24 +91,11 @@ namespace CommitmentsDataGen.Builders
 
         public Apprenticeship Build()
         {
-            DateTime? startDate = null;
+            DateTime? startDate = GenerateStartDate();
+            var endDate = GenerateEndDate(startDate);
+            var stopDate = GenerateStopDate(startDate, endDate);
+           
 
-            switch (Started)
-            {
-                case ApprenticeshipStartedOption.Started:
-                    startDate = DataHelper.GetRandomStartDateInPast();
-                    break;
-                case ApprenticeshipStartedOption.Random:
-                    startDate = DataHelper.GetRandomStartDate();
-                    break;
-                case ApprenticeshipStartedOption.WaitingToStart:
-                    startDate = DataHelper.GetRandomStartDateInFuture();
-                    break;
-                default:
-                    startDate = null;
-                    break;
-            }
-            
             //todo: perhaps select a training course valid on the start date?
 
             if (TrainingCourse == null)
@@ -91,16 +113,17 @@ namespace CommitmentsDataGen.Builders
                 LastName = DataHelper.GetRandomLastName(),
                 DateOfBirth = DataHelper.GetRandomDateOfBirth(),
                 StartDate = startDate,
-                EndDate = DataHelper.GetRandomEndDate(startDate),
-                ULN = DataHelper.GetRandomUniqueULN(),
+                EndDate = endDate,
+                ULN = String.IsNullOrEmpty(Uln) ? DataHelper.GetRandomUniqueULN() : Uln,
                 TrainingCode = TrainingCourse.Id,
                 TrainingType = TrainingCourse.TrainingType,
                 TrainingName = TrainingCourse.TitleRestrictedLength,
                 Cost = Cost,
                 AgreementStatus = CohortBuilder.AgreementStatus,
-                PaymentStatus = CohortBuilder.PaymentStatus,
+                PaymentStatus = stopDate.HasValue ? PaymentStatus.Cancelled : CohortBuilder.PaymentStatus,
                 HasHadDataLockSuccess = HasHadDataLockSuccess,
-                CreatedOn = DateTime.UtcNow
+                CreatedOn = DateTime.UtcNow,
+                StopDate = stopDate
             };
 
             //data locks
@@ -120,6 +143,72 @@ namespace CommitmentsDataGen.Builders
 
             return apprenticeship;
         }
+
+        private DateTime? GenerateStartDate()
+        {
+            if (ExplicitStartDate.HasValue)
+            {
+                return ExplicitStartDate;
+            }
+
+            switch (Started)
+            {
+                case ApprenticeshipStartedOption.Started:
+                    return DataHelper.GetRandomStartDateInPast();
+                    break;
+                case ApprenticeshipStartedOption.Random:
+                    return DataHelper.GetRandomStartDate();
+                    break;
+                case ApprenticeshipStartedOption.WaitingToStart:
+                    return DataHelper.GetRandomStartDateInFuture();
+                    break;
+                default:
+                    return null;
+                    break;
+            }
+        }
+
+        private DateTime? GenerateEndDate(DateTime? startDate)
+        {
+            if (ExplicitEndDate.HasValue)
+            {
+                return ExplicitEndDate;
+            }
+
+            return DataHelper.GetRandomEndDate(startDate);
+        }
+
+        private DateTime? GenerateStopDate(DateTime? startDate, DateTime? endDate)
+        {
+            if (ExplicitStopDate.HasValue)
+            {
+                return ExplicitStopDate;
+            }
+
+            if (Stopped == ApprenticeshipStopOption.NotStopped)
+            {
+                return null;
+            }
+
+            if (Stopped == ApprenticeshipStopOption.Midway)
+            {
+                if (!startDate.HasValue || !endDate.HasValue)
+                {
+                    return null;
+                }
+
+                return DataHelper.GetMidwayPoint(startDate.Value, endDate.Value);
+            }
+
+            if (Stopped == ApprenticeshipStopOption.StoppedAndBackdatedToStart)
+            {
+                return startDate;
+            }
+
+            return null;
+        }
+
+
     }
 
     public enum ApprenticeshipStartedOption
@@ -128,6 +217,13 @@ namespace CommitmentsDataGen.Builders
         Random = 1,
         Started = 2,
         WaitingToStart = 3
+    }
+
+    public enum ApprenticeshipStopOption
+    {
+        NotStopped = 0,
+        StoppedAndBackdatedToStart = 1,
+        Midway = 2
     }
 
 }
