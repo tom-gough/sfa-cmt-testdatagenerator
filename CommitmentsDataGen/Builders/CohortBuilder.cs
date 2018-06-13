@@ -77,6 +77,16 @@ namespace CommitmentsDataGen.Builders
             return this;
         }
 
+        public CohortBuilder WithEmployer(long accountId, string legalEntityId, string name)
+        {
+            _commitment.EmployerAccountId = accountId;
+            _commitment.LegalEntityId = legalEntityId;
+            _commitment.LegalEntityName = name;
+            _commitment.LegalEntityAddress = "Some address";
+            _commitment.LegalEntityOrganisationType = 1;
+            return this;
+        }
+
         public CohortBuilder WithProvider(int providerId, string providerName, RelationshipOption option)
         {
             _commitment.ProviderId = providerId;
