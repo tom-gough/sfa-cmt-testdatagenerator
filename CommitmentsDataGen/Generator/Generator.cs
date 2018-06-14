@@ -299,5 +299,38 @@ namespace CommitmentsDataGen.Generator
             builder.Build();
         }
 
+        public static void ReusingUlnWhenPendingWithSender()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithTransferSender(30060, "Silly Bears", TransferApprovalStatus.Pending)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.PendingApproval)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2018, 6, 1))
+                );
+            builder.Build();
+
+
+            builder = new CohortBuilder();
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Employer)
+                .WithLastAction(LastAction.None)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.NotAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.PendingApproval)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2018, 9, 1))
+                );
+            builder.Build();
+        }
     }
 }
