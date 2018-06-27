@@ -24,8 +24,13 @@ namespace CommitmentsDataGen.Generator
                 new Scenario("Approved Transfer Apprentices (Live and Waiting to Start) pending Data Lock success", Generator.Scenario_Fully_Approved_Transfer_Apprentices_Pending_DataLock_Success),
                 new Scenario("Scenario_Fully_Approved_Cohort_With_Provider_Removed_From_ROATP", Generator.Scenario_Fully_Approved_Cohort_With_Provider_Removed_From_ROATP),
                 new Scenario("PriceDataLock", Generator.PriceDataLock),
+                new Scenario("CourseDataLock", Generator.CourseDataLock),
+                new Scenario("Price Change through DataLock", Generator.DataLockDueToPriceChangeMidway),
                 new Scenario("Reusing a ULN", Generator.ReusingUln),
-                new Scenario("Reusing a ULN when it is pending with transfer sender", Generator.ReusingUlnWhenPendingWithSender)
+                new Scenario("Reusing a ULN when it is pending with transfer sender", Generator.ReusingUlnWhenPendingWithSender),
+                new Scenario("A great many approved cohorts", Generator.ManyApproved),
+                new Scenario("A very large cohort ready to approve", Generator.Scenario_Very_Large_Cohort),
+                new Scenario("Scenario_Multiple_Approved_Apprenticeships_Employers_And_Providers", Generator.Scenario_Multiple_Approved_Apprenticeships_Employers_And_Providers)
             };
         }
 

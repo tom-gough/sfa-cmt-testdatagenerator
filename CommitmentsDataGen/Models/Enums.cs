@@ -64,4 +64,12 @@ namespace CommitmentsDataGen.Models
         Undefined,
         Defined
     }
+
+    public enum DataLockType
+    {
+        None,
+        Price,
+        PriceChangeMidway,
+        Course
+    }
 }

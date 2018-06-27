@@ -19,7 +19,7 @@ namespace CommitmentsDataGen.Builders
         public string Uln { get; private set; }
         public CohortBuilder CohortBuilder { get; private set; }
         
-        public bool HasPriceDataLock { get; private set; }
+        public DataLockType DataLock { get; private set; }
 
         public ApprenticeshipBuilder(CohortBuilder cohortBuilder)
         {
@@ -83,11 +83,13 @@ namespace CommitmentsDataGen.Builders
             return this;
         }
 
-        public ApprenticeshipBuilder WithPriceDataLock()
+        public ApprenticeshipBuilder WithDataLock(DataLockType dataLockType)
         {
-            HasPriceDataLock = true;
+            DataLock = dataLockType;
             return this;
         }
+
+
 
         public Apprenticeship Build()
         {
@@ -123,11 +125,12 @@ namespace CommitmentsDataGen.Builders
                 PaymentStatus = stopDate.HasValue ? PaymentStatus.Cancelled : CohortBuilder.PaymentStatus,
                 HasHadDataLockSuccess = HasHadDataLockSuccess,
                 CreatedOn = DateTime.UtcNow,
-                StopDate = stopDate
+                StopDate = stopDate,
+                AgreedOn = CohortBuilder.PaymentStatus != PaymentStatus.PendingApproval ? DateTime.Now : default(DateTime?)
             };
 
             //data locks
-            if (HasPriceDataLock)
+            if (DataLock == DataLockType.Price)
             {
                 apprenticeship.DataLocks.Add(new DataLock
                 {
@@ -137,6 +140,46 @@ namespace CommitmentsDataGen.Builders
                     IlrTrainingCourseCode = apprenticeship.TrainingCode,
                     IlrTrainingType = apprenticeship.TrainingType,
                     PriceEpisodeIdentifier = apprenticeship.TrainingCode + '-' + apprenticeship.StartDate.Value.ToShortDateString(),
+                    Status = 2
+                });
+            }
+            if (DataLock == DataLockType.PriceChangeMidway)
+            {
+                apprenticeship.DataLocks.Add(new DataLock
+                { //successful dlock
+                    ErrorCode = 64,
+                    IlrEffectiveFromDate = apprenticeship.StartDate.Value,
+                    IlrTotalCost = apprenticeship.Cost,
+                    IlrTrainingCourseCode = apprenticeship.TrainingCode,
+                    IlrTrainingType = apprenticeship.TrainingType,
+                    PriceEpisodeIdentifier = apprenticeship.TrainingCode + '-' + apprenticeship.StartDate.Value.ToShortDateString(),
+                    Status = 1
+                });
+                var priceChangeDate = DataHelper
+                    .GetMidwayPoint(apprenticeship.StartDate.Value, apprenticeship.EndDate.Value).Value;
+                apprenticeship.DataLocks.Add(new DataLock
+                { //price change dlock error
+                    ErrorCode = 64,
+                    IlrEffectiveFromDate = priceChangeDate,
+                    IlrTotalCost = apprenticeship.Cost * 2,
+                    IlrTrainingCourseCode = apprenticeship.TrainingCode,
+                    IlrTrainingType = apprenticeship.TrainingType,
+                    PriceEpisodeIdentifier = apprenticeship.TrainingCode + '-' + priceChangeDate.ToShortDateString(),
+                    Status = 2
+                });
+            }
+
+            if (DataLock == DataLockType.Course)
+            {
+                var dlockCourse = DataHelper.GetRandomTrainingCourse();
+                apprenticeship.DataLocks.Add(new DataLock
+                {
+                    ErrorCode = 4,
+                    IlrEffectiveFromDate = apprenticeship.StartDate.Value,
+                    IlrTotalCost = apprenticeship.Cost,
+                    IlrTrainingCourseCode = dlockCourse.Id,
+                    IlrTrainingType = dlockCourse.TrainingType,
+                    PriceEpisodeIdentifier = dlockCourse.Id + '-' + apprenticeship.StartDate.Value.ToShortDateString(),
                     Status = 2
                 });
             }

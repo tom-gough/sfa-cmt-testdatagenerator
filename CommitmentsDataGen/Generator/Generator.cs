@@ -258,8 +258,50 @@ namespace CommitmentsDataGen.Generator
                     new ApprenticeshipBuilder(builder)
                         .WithDataLockSuccess()
                         .WithStartOption(ApprenticeshipStartedOption.Started)
-                        .WithPriceDataLock()
+                        .WithDataLock(DataLockType.Price)
                     );
+            builder.Build();
+
+        }
+
+        public static void CourseDataLock()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithDataLockSuccess()
+                        .WithStartOption(ApprenticeshipStartedOption.Started)
+                        .WithDataLock(DataLockType.Course)
+                );
+            builder.Build();
+
+        }
+
+        public static void DataLockDueToPriceChangeMidway()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithDataLockSuccess()
+                        .WithStartOption(ApprenticeshipStartedOption.Started)
+                        .WithDataLock(DataLockType.PriceChangeMidway)
+                );
             builder.Build();
 
         }
@@ -332,5 +374,88 @@ namespace CommitmentsDataGen.Generator
                 );
             builder.Build();
         }
+
+        public static void ManyApproved()
+        {
+            for (var i = 0; i < 10; i++)
+            {
+                var builder = new CohortBuilder();
+
+                builder
+                    .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                    .WithEditStatus(EditStatus.Both)
+                    .WithLastAction(LastAction.Approve)
+                    .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                    .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                    .WithApprenticeships(20);
+                builder.Build();
+            }
+        }
+
+        public static void Scenario_Very_Large_Cohort()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeships(5000);
+            builder.Build();
+        }
+
+        public static void Scenario_Multiple_Approved_Apprenticeships_Employers_And_Providers()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithEmployer(8194, "1234", "ASAP CATERING LIMITED (Stub)")
+                .WithProvider(10005124, "Plumpton College", RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeships(1);
+            builder.Build();
+
+            builder = new CohortBuilder();
+
+            builder
+                .WithEmployer(8194, "1234", "ASAP CATERING LIMITED (Stub)")
+                .WithProvider(10005077, "Peterborough College", RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeships(1);
+            builder.Build();
+
+
+
+            //Silly Bears = 30060
+            builder = new CohortBuilder();
+            builder
+                .WithEmployer(30060, "3884", "BUTCHER AND CHEESE MAKER LTD (Stub)")
+                .WithProvider(10005124, "Plumpton College", RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeships(1);
+            builder.Build();
+
+            builder = new CohortBuilder();
+            builder
+                .WithEmployer(30060, "3884", "BUTCHER AND CHEESE MAKER LTD (Stub)")
+                .WithProvider(10005077, "Peterborough College", RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeships(1);
+            builder.Build();
+
+        }
+
     }
 }
