@@ -50,24 +50,7 @@ namespace CommitmentsDataGen.Helpers
         public static void SaveCommitment(Commitment cohort)
         {
             var connection = GetConnection();
-
-            var query = ("insert into Commitment " +
-                               "([Reference],[EmployerAccountId] ,[LegalEntityId],[LegalEntityName],[LegalEntityAddress]" +
-                               ",[LegalEntityOrganisationType],[ProviderId],[ProviderName],[CommitmentStatus],[EditStatus]" +
-                               ",[CreatedOn],[LastAction],[LastUpdatedByEmployerName],[LastUpdatedByEmployerEmail],[LastUpdatedByProviderName]" +
-                               ",[LastUpdatedByProviderEmail],[TransferSenderId],[TransferSenderName],[TransferApprovalStatus]" +
-                               ",[TransferApprovalActionedByEmployerName]," +
-                               "[TransferApprovalActionedByEmployerEmail],[TransferApprovalActionedOn]) " +
-                               "VALUES(" +
-                                 "@Reference,@EmployerAccountId ,@LegalEntityId,@LegalEntityName,@LegalEntityAddress" +
-                                 ",@LegalEntityOrganisationType,@ProviderId,@ProviderName,@CommitmentStatus,@EditStatus" +
-                                 ",@CreatedOn,@LastAction,@LastUpdatedByEmployerName,@LastUpdatedByEmployerEmail,@LastUpdatedByProviderName" +
-                                 ",@LastUpdatedByProviderEmail,@TransferSenderId,@TransferSenderName,@TransferApprovalStatus" +
-                                 ",@TransferApprovalActionedByEmployerName," +
-                                 "@TransferApprovalActionedByEmployerEmail,@TransferApprovalActionedOn" +
-                                 ")"
-                               );
-
+            var query = FileHelper.GetSql("SaveCommitment");
             var result = connection.Execute(query, cohort);
         }
 

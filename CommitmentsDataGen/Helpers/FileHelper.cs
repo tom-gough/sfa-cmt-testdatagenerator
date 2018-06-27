@@ -21,5 +21,11 @@ namespace CommitmentsDataGen
 
             return result;
         }
+
+        public static string GetSql(string source)
+        {
+            var file = System.IO.File.ReadAllText($"Sql\\{source}.sql");
+            return file;
+        }
     }
 }
