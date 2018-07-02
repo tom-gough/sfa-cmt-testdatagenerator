@@ -71,7 +71,6 @@ namespace CommitmentsDataGen.Generator
 
         public static void Scenario_Transfer_Cohort_Pending_With_Sender_With_FundingBands()
         {
-
             var builder = new CohortBuilder();
 
             builder
