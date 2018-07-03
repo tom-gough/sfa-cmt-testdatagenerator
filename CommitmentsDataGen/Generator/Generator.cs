@@ -397,9 +397,10 @@ namespace CommitmentsDataGen.Generator
 
             builder
                 .WithDefaultEmployerProvider(RelationshipOption.Defined)
-                .WithEditStatus(EditStatus.Provider)
+                .WithEditStatus(EditStatus.Employer)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.ProviderAgreed)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeships(5000);
+                .WithApprenticeships(50);
             builder.Build();
         }
 

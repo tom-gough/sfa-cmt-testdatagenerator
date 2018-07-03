@@ -69,10 +69,8 @@ namespace CommitmentsDataGen.Helpers
 
             var result = connection.Execute(query, apprenticeship);
 
-
             //price history
-
-            if (apprenticeship.StartDate <= DateTime.Now)
+            if (apprenticeship.AgreementStatus == AgreementStatus.BothAgreed)
             {
                 var query2 = "insert into PriceHistory ([ApprenticeshipId],[Cost],[FromDate]) " +
                         "VALUES (@ApprenticeshipId,@Cost,@FromDate)";
@@ -84,11 +82,6 @@ namespace CommitmentsDataGen.Helpers
                     FromDate = apprenticeship.StartDate
                 });
             }
-
-            
-            
-
-
         }
 
         public static void CreateEmployerProviderRelationship(Commitment commitment, RelationshipOption verified)
