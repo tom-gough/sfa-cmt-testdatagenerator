@@ -29,6 +29,7 @@ namespace CommitmentsDataGen.Models
         public string TransferApprovalActionedByEmployerName { get; set; }
         public string TransferApprovalActionedByEmployerEmail { get; set; }
         public DateTime? TransferApprovalActionedOn { get; set; }
+        public string AccountLegalEntityPublicHashedId { get; set; }
 
         public List<Apprenticeship> Apprenticeships { get; set; }
     }

@@ -184,6 +184,32 @@ namespace CommitmentsDataGen.Builders
                 });
             }
 
+            if (DataLock == DataLockType.MultiPrice)
+            {
+                var priceChangeDate = DataHelper
+                    .GetMidwayPoint(apprenticeship.StartDate.Value, apprenticeship.EndDate.Value).Value;
+                apprenticeship.DataLocks.Add(new DataLock
+                {
+                    ErrorCode = 64,
+                    IlrEffectiveFromDate = apprenticeship.StartDate.Value,
+                    IlrTotalCost = apprenticeship.Cost * 2,
+                    IlrTrainingCourseCode = apprenticeship.TrainingCode,
+                    IlrTrainingType = apprenticeship.TrainingType,
+                    PriceEpisodeIdentifier = apprenticeship.TrainingCode + '-' + apprenticeship.StartDate.Value.ToShortDateString(),
+                    Status = 2
+                });
+                apprenticeship.DataLocks.Add(new DataLock
+                {
+                    ErrorCode = 64,
+                    IlrEffectiveFromDate = priceChangeDate,
+                    IlrTotalCost = apprenticeship.Cost * 3,
+                    IlrTrainingCourseCode = apprenticeship.TrainingCode,
+                    IlrTrainingType = apprenticeship.TrainingType,
+                    PriceEpisodeIdentifier = apprenticeship.TrainingCode + '-' + priceChangeDate.ToShortDateString(),
+                    Status = 2
+                });
+            }
+
             return apprenticeship;
         }
 

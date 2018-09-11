@@ -36,7 +36,8 @@ namespace CommitmentsDataGen.Builders
                 LastUpdatedByEmployerName = "",
                 LastUpdatedByEmployerEmail = "",
                 LastUpdatedByProviderName = "",
-                LastUpdatedByProviderEmail = ""
+                LastUpdatedByProviderEmail = "",
+                AccountLegalEntityPublicHashedId = "XYZ" + id
             };
 
             _apprenticeshipBuilders = new List<ApprenticeshipBuilder>();

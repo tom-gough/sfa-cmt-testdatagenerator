@@ -70,6 +70,7 @@ namespace CommitmentsDataGen.Models
         None,
         Price,
         PriceChangeMidway,
-        Course
+        Course,
+        MultiPrice
     }
 }
