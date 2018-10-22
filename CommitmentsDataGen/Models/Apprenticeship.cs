@@ -35,6 +35,12 @@ namespace CommitmentsDataGen.Models
         public bool HasHadDataLockSuccess { get; set; }
 
         public List<DataLock> DataLocks { get; set; }
+        public bool HasChangeOfCircumstances { get; set; }
+
+        public int? PendingUpdateOriginator
+        { //todo: allow originator to change
+            get { return HasChangeOfCircumstances ? 1 : default(int?); }
+        }
 
         public Apprenticeship()
         {

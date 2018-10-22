@@ -26,17 +26,22 @@ namespace CommitmentsDataGen.Generator
                 new Scenario("Scenario_Fully_Approved_Cohort_With_Provider_Removed_From_ROATP", Generator.Scenario_Fully_Approved_Cohort_With_Provider_Removed_From_ROATP),
                 new Scenario("PriceDataLock", Generator.PriceDataLock),
                 new Scenario("CourseDataLock", Generator.CourseDataLock),
+                new Scenario("CourseDataLockWithoutDataLockSuccess", Generator.CourseDataLockWithoutDataLockSuccess),
                 new Scenario("MulitplePriceDataLocks", Generator.MulitplePriceDataLocks),
+                new Scenario("PriceDataLockAndPendingChangeOfCircumstances", Generator.PriceDataLockAndPendingChangeOfCircumstances),
                 new Scenario("Price Change through DataLock", Generator.DataLockDueToPriceChangeMidway),
                 new Scenario("Reusing a ULN", Generator.ReusingUln),
                 new Scenario("Reusing a ULN when it is pending with transfer sender", Generator.ReusingUlnWhenPendingWithSender),
                 new Scenario("Two Approved Apprenticeships With Same Uln", Generator.TwoApprovedApprenticeshipsWithSameUln),
+                new Scenario("MorrisonsScenario", Generator.MorrisonsScenario),
                 new Scenario("A great many approved cohorts", Generator.ManyApproved),
+                new Scenario("A single approved apprenticeship", Generator.SingleApproved),
                 new Scenario("A very large cohort ready for provider to approve", Generator.Scenario_Very_Large_Cohort),
                 new Scenario("A very large cohort ready for employer to approve", Generator.Scenario_Very_Large_Cohort_Ready_For_Employer),
                 new Scenario("Scenario_Multiple_Approved_Apprenticeships_Employers_And_Providers", Generator.Scenario_Multiple_Approved_Apprenticeships_Employers_And_Providers),
                 new Scenario("ManyApproved_And_Very_Large_Cohort_Ready_For_Employer", Generator.ManyApproved_And_Very_Large_Cohort_Ready_For_Employer),
-                new Scenario("Investigating end date bug", Generator.Investiating_EndDate_Bug)
+                new Scenario("Investigating end date bug", Generator.Investiating_EndDate_Bug),
+                new Scenario("PriceDataLock", Generator.ProduIssueWithPriceDataLock)
             };
         }
 

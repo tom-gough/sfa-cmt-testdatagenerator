@@ -1,5 +1,6 @@
 ﻿using System;
 using CommitmentsDataGen.Builders;
+using CommitmentsDataGen.Helpers;
 using CommitmentsDataGen.Models;
 
 namespace CommitmentsDataGen.Generator
@@ -121,7 +122,7 @@ namespace CommitmentsDataGen.Generator
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
-                .WithApprenticeships(50);
+                .WithApprenticeships(1);
             builder.Build();
 
         }
@@ -318,6 +319,26 @@ namespace CommitmentsDataGen.Generator
 
         }
 
+        public static void CourseDataLockWithoutDataLockSuccess()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(ApprenticeshipStartedOption.Started)
+                        .WithDataLock(DataLockType.Course)
+                );
+            builder.Build();
+
+        }
+
         public static void DataLockDueToPriceChangeMidway()
         {
 
@@ -336,6 +357,30 @@ namespace CommitmentsDataGen.Generator
                         .WithDataLock(DataLockType.PriceChangeMidway)
                 );
             builder.Build();
+
+        }
+
+        public static void PriceDataLockAndPendingChangeOfCircumstances()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        //.WithDataLockSuccess()
+                        .WithStartOption(ApprenticeshipStartedOption.Started)
+                        .WithDataLock(DataLockType.Price)
+                        .WithChangeOfCircumstances()
+                );
+            builder.Build();
+
+
 
         }
 
@@ -410,6 +455,45 @@ namespace CommitmentsDataGen.Generator
         }
 
 
+        public static void MorrisonsScenario()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2017, 10, 1))
+                        .WithEndOption(new DateTime(2021, 7, 1))
+                        .WithStopOption(new DateTime(2017, 10, 1))
+                );
+            builder.Build();
+
+
+            builder = new CohortBuilder();
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2017,11, 1))
+                        .WithEndOption(new DateTime(2021, 1, 1))
+                        .WithStopOption(new DateTime(2018, 9, 7))
+                );
+            builder.Build();
+        }
+
+
+
         public static void ReusingUlnWhenPendingWithSender()
         {
             var builder = new CohortBuilder();
@@ -444,19 +528,57 @@ namespace CommitmentsDataGen.Generator
             builder.Build();
         }
 
+        public static void SingleApproved()
+        {
+            var builder = new CohortBuilder();
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus
+                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder).WithStartOption(new DateTime(2018,9,1)));
+
+            builder.Build();
+        }
+
         public static void ManyApproved()
         {
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var builder = new CohortBuilder();
 
-                builder
-                    .WithDefaultEmployerProvider(RelationshipOption.Defined)
-                    .WithEditStatus(EditStatus.Both)
-                    .WithLastAction(LastAction.Approve)
-                    .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed) //todo: move these status fields into WithApprenticeships() method?
-                    .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
-                    .WithApprenticeships(20);
+                if (RandomHelper.GetRandomNumber(10) > 8)
+                {
+                    builder
+                        .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                        .WithEditStatus(EditStatus.Both)
+                        .WithLastAction(LastAction.Approve)
+                        .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                        .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                        .WithApprenticeships(1);
+                }
+                else
+                {
+                    DataLockType datalockType = DataLockType.Course;
+                    var r = RandomHelper.GetRandomNumber(3);
+                    if (r == 1) { datalockType = DataLockType.Price; }
+                    if (r == 2) { datalockType = DataLockType.MultiPrice; }
+
+                    builder
+                        .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                        .WithEditStatus(EditStatus.Both)
+                        .WithLastAction(LastAction.Approve)
+                        .WithApprenticeshipAgreementStatus(AgreementStatus
+                            .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                        .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                        .WithApprenticeship(cohort =>
+                            new ApprenticeshipBuilder(builder)
+                                .WithDataLock(datalockType));
+                }
+
                 builder.Build();
             }
         }
@@ -588,5 +710,24 @@ namespace CommitmentsDataGen.Generator
             builder.Build();
         }
 
+
+        public static void ProduIssueWithPriceDataLock()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider(RelationshipOption.Defined)
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        //.WithDataLockSuccess()
+                        .WithStartOption(ApprenticeshipStartedOption.Started)
+                        .WithDataLock(DataLockType.Price)
+                );
+            builder.Build();
+        }
     }
 }

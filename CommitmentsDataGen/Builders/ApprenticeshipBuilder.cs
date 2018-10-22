@@ -14,6 +14,7 @@ namespace CommitmentsDataGen.Builders
         public DateTime? ExplicitStopDate { get; private set; }
         public ApprenticeshipStopOption Stopped { get; private set; }
         public bool HasHadDataLockSuccess { get; private set; }
+        public bool HasChangeOfCircumstances { get; set; }
         public TrainingCourse TrainingCourse { get; private set; }
         public int Cost { get; private set; }
         public string Uln { get; private set; }
@@ -89,6 +90,11 @@ namespace CommitmentsDataGen.Builders
             return this;
         }
 
+        public ApprenticeshipBuilder WithChangeOfCircumstances()
+        {
+            HasChangeOfCircumstances = true;
+            return this;
+        }
 
 
         public Apprenticeship Build()
@@ -123,7 +129,9 @@ namespace CommitmentsDataGen.Builders
                 Cost = Cost,
                 AgreementStatus = CohortBuilder.AgreementStatus,
                 PaymentStatus = stopDate.HasValue ? PaymentStatus.Cancelled : CohortBuilder.PaymentStatus,
+                PaymentOrder = CohortBuilder.PaymentStatus == PaymentStatus.PendingApproval ? default(int?) : 0,
                 HasHadDataLockSuccess = HasHadDataLockSuccess,
+                HasChangeOfCircumstances = HasChangeOfCircumstances,
                 CreatedOn = DateTime.UtcNow,
                 StopDate = stopDate,
                 AgreedOn = CohortBuilder.PaymentStatus != PaymentStatus.PendingApproval ? DateTime.Now : default(DateTime?)
@@ -175,7 +183,7 @@ namespace CommitmentsDataGen.Builders
                 apprenticeship.DataLocks.Add(new DataLock
                 {
                     ErrorCode = 4,
-                    IlrEffectiveFromDate = apprenticeship.StartDate.Value,
+                    IlrEffectiveFromDate = apprenticeship.StartDate.Value.AddDays(15),
                     IlrTotalCost = apprenticeship.Cost,
                     IlrTrainingCourseCode = dlockCourse.Id,
                     IlrTrainingType = dlockCourse.TrainingType,

@@ -36,9 +36,11 @@ namespace CommitmentsDataGen.Builders
                 LastUpdatedByEmployerName = "",
                 LastUpdatedByEmployerEmail = "",
                 LastUpdatedByProviderName = "",
-                LastUpdatedByProviderEmail = "",
-                AccountLegalEntityPublicHashedId = "XYZ" + id
+                LastUpdatedByProviderEmail = ""
             };
+
+            _commitment.AccountLegalEntityPublicHashedId =
+                "XYZ" + _commitment.EmployerAccountId.ToString() + '_' + _commitment.LegalEntityId;
 
             _apprenticeshipBuilders = new List<ApprenticeshipBuilder>();
         }
@@ -164,6 +166,11 @@ namespace CommitmentsDataGen.Builders
                 {
                     DbHelper.SaveDataLock(apprenticeship, datalock);
                 }
+
+                if (apprenticeship.HasChangeOfCircumstances)
+                {
+                    DbHelper.CreateChangeOfCircumstances(apprenticeship);
+                }
             }
 
             DbHelper.CreateEmployerProviderRelationship(_commitment, EmployerProviderRelationshipExists);
@@ -172,6 +179,8 @@ namespace CommitmentsDataGen.Builders
             {
                 DbHelper.CreateTransferRequest(_commitment);
             }
+
+
 
             return _commitment;
         }

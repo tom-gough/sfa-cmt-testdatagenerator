@@ -61,11 +61,11 @@ namespace CommitmentsDataGen.Helpers
             var query = "insert into Apprenticeship " +
                         "([CommitmentId],[FirstName],[LastName],[ULN],[TrainingType],[TrainingCode],[TrainingName],[Cost]" +
                         ",[StartDate],[EndDate],[AgreementStatus],[PaymentStatus],[DateOfBirth],[NINumber],[EmployerRef]" +
-                        ",[ProviderRef],[CreatedOn],[AgreedOn],[PaymentOrder],[StopDate],[PauseDate],[HasHadDataLockSuccess])" +
+                        ",[ProviderRef],[CreatedOn],[AgreedOn],[PaymentOrder],[StopDate],[PauseDate],[HasHadDataLockSuccess],[PendingUpdateOriginator])" +
                         "VALUES(" +
                         "@CommitmentId,@FirstName,@LastName, @ULN, @TrainingType, @TrainingCode,@TrainingName, @Cost,@StartDate," +
                         "@EndDate,@AgreementStatus,@PaymentStatus,@DateOfBirth,@NINumber, @EmployerRef, @ProviderRef, @CreatedOn, @AgreedOn, " +
-                        "@PaymentOrder, @StopDate, @PauseDate, @HasHadDataLockSuccess)";
+                        "@PaymentOrder, @StopDate, @PauseDate, @HasHadDataLockSuccess,@PendingUpdateOriginator)";
 
             var result = connection.Execute(query, apprenticeship);
 
@@ -188,6 +188,27 @@ namespace CommitmentsDataGen.Helpers
                 IsResolved = false,
                 EventStatus = 1
             });
+        }
+
+        public static void CreateChangeOfCircumstances(Apprenticeship apprenticeship)
+        {
+            //todo: allow different originators
+            
+
+            var connection = GetConnection();
+
+            var query =
+                @"insert into ApprenticeshipUpdate(ApprenticeshipId, Originator, Status, FirstName) values(@ApprenticeshipId, @Originator, @Status, @FirstName);";
+
+            var result = connection.Execute(query, new
+            {
+                ApprenticeshipId = apprenticeship.Id,
+                Originator = 1,
+                Status = 0,
+                FirstName = "Jonny Boo"
+            });
+
+
         }
     }
 }
