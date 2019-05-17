@@ -59,12 +59,6 @@ namespace CommitmentsDataGen.Models
         Deleted = 5
     }
 
-    public enum RelationshipOption
-    {
-        Undefined,
-        Defined
-    }
-
     public enum DataLockType
     {
         None,

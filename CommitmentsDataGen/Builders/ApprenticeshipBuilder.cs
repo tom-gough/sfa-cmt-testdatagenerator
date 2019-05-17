@@ -134,7 +134,7 @@ namespace CommitmentsDataGen.Builders
                 HasChangeOfCircumstances = HasChangeOfCircumstances,
                 CreatedOn = DateTime.UtcNow,
                 StopDate = stopDate,
-                AgreedOn = CohortBuilder.PaymentStatus != PaymentStatus.PendingApproval ? DateTime.Now : default(DateTime?)
+                AgreedOn = CohortBuilder.AgreedOnDate
             };
 
             //data locks

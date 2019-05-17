@@ -12,8 +12,9 @@ namespace CommitmentsDataGen.Builders
 
         public AgreementStatus AgreementStatus { get; private set; }
         public PaymentStatus PaymentStatus { get; private set; }
-        public RelationshipOption EmployerProviderRelationshipExists { get; private set; }
 
+        public DateTime? AgreedOnDate { get; private set; }
+        
         private readonly Commitment _commitment;
         private readonly List<ApprenticeshipBuilder> _apprenticeshipBuilders;
 
@@ -39,23 +40,20 @@ namespace CommitmentsDataGen.Builders
                 LastUpdatedByProviderEmail = ""
             };
 
-            _commitment.AccountLegalEntityPublicHashedId =
-                "XYZ" + _commitment.EmployerAccountId.ToString() + '_' + _commitment.LegalEntityId;
-
             _apprenticeshipBuilders = new List<ApprenticeshipBuilder>();
         }
 
-        public CohortBuilder WithDefaultEmployerProvider(RelationshipOption option)
+        public CohortBuilder WithDefaultEmployerProvider()
         {
             _commitment.EmployerAccountId = 8194;
-            _commitment.LegalEntityId = "06344082";
-            _commitment.LegalEntityName = "ASAP CATERING LIMITED (Stub)";
-            _commitment.LegalEntityAddress = "18 Soho Square, London, W1D 3QL";
+            _commitment.LegalEntityId = "736281";
+            _commitment.LegalEntityName = "MegaCorp Pharmaceuticals";
+            _commitment.LegalEntityAddress = "1 High Street";
             _commitment.LegalEntityOrganisationType = 1;
-            _commitment.ProviderId = 10005124;
-            _commitment.ProviderName = "PLUMPTON COLLEGE";
+            _commitment.AccountLegalEntityPublicHashedId = "YZWX27";
 
-            EmployerProviderRelationshipExists = option;
+            _commitment.ProviderId = 10005077;
+            _commitment.ProviderName = "Train-U-Good Corporation";
 
             return this;
         }
@@ -63,40 +61,36 @@ namespace CommitmentsDataGen.Builders
         public CohortBuilder WithDefaultEmployer()
         {
             _commitment.EmployerAccountId = 8194;
-            _commitment.LegalEntityId = "06344082";
-            _commitment.LegalEntityName = "ASAP CATERING LIMITED (Stub)";
-            _commitment.LegalEntityAddress = "18 Soho Square, London, W1D 3QL";
+            _commitment.LegalEntityId = "736281";
+            _commitment.LegalEntityName = "MegaCorp Pharmaceuticals";
+            _commitment.LegalEntityAddress = "1 High Street";
             _commitment.LegalEntityOrganisationType = 1;
+            _commitment.AccountLegalEntityPublicHashedId = "YZWX27";
             return this;
         }
 
-        public CohortBuilder WithDefaultProvider(RelationshipOption option)
+        public CohortBuilder WithDefaultProvider()
         {
-            _commitment.ProviderId = 10005124;
-            _commitment.ProviderName = "PLUMPTON COLLEGE";
-
-            EmployerProviderRelationshipExists = option;
-
+            _commitment.ProviderId = 10005077;
+            _commitment.ProviderName = "Train-U-Good Corporation";
             return this;
         }
 
-        public CohortBuilder WithEmployer(long accountId, string legalEntityId, string name)
+        public CohortBuilder WithEmployer(long accountId, string legalEntityId, string name, string accountLegalEntityPublicHashedId)
         {
             _commitment.EmployerAccountId = accountId;
             _commitment.LegalEntityId = legalEntityId;
             _commitment.LegalEntityName = name;
             _commitment.LegalEntityAddress = "Some address";
             _commitment.LegalEntityOrganisationType = 1;
+            _commitment.AccountLegalEntityPublicHashedId = accountLegalEntityPublicHashedId;
             return this;
         }
 
-        public CohortBuilder WithProvider(int providerId, string providerName, RelationshipOption option)
+        public CohortBuilder WithProvider(int providerId, string providerName)
         {
             _commitment.ProviderId = providerId;
             _commitment.ProviderName = providerName;
-
-            EmployerProviderRelationshipExists = option;
-
             return this;
         }
 
@@ -138,9 +132,12 @@ namespace CommitmentsDataGen.Builders
             return this;
         }
 
-        public CohortBuilder WithApprenticeshipPaymentStatus(PaymentStatus status)
+        public CohortBuilder WithApprenticeshipPaymentStatus(PaymentStatus status, DateTime? approvalDate = null)
         {
             PaymentStatus = status;
+
+            AgreedOnDate = approvalDate.HasValue ? approvalDate.Value : default(DateTime?);
+
             return this;
         }
 
@@ -173,13 +170,12 @@ namespace CommitmentsDataGen.Builders
                 }
             }
 
-            DbHelper.CreateEmployerProviderRelationship(_commitment, EmployerProviderRelationshipExists);
-
             if (_commitment.TransferApprovalStatus.HasValue)
             {
                 DbHelper.CreateTransferRequest(_commitment);
             }
 
+            DbHelper.CalculatePaymentOrders(_commitment.EmployerAccountId);
 
 
             return _commitment;

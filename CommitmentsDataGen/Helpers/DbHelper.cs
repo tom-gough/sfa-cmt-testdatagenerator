@@ -35,7 +35,6 @@ namespace CommitmentsDataGen.Helpers
             connection.Execute("delete from TransferRequest");
             connection.Execute("delete from CustomProviderPaymentPriority");
             connection.Execute("delete from History");
-            connection.Execute("delete from Relationship"); 
             connection.Execute("delete from PriceHistory");
             connection.Execute("delete from Message");
             connection.Execute("delete from Apprenticeship");
@@ -84,47 +83,10 @@ namespace CommitmentsDataGen.Helpers
             }
         }
 
-        public static void CreateEmployerProviderRelationship(Commitment commitment, RelationshipOption verified)
-        {
-            if (HasEmployerProviderRelationship(commitment))
-            {
-                return;
-            }
-
-            var connection = GetConnection();
-
-            var query = "insert into Relationship " +
-                        "([ProviderId],[ProviderName],[EmployerAccountId],[LegalEntityId],[LegalEntityName],[LegalEntityAddress],[LegalEntityOrganisationType],[Verified],[CreatedOn])" +
-                        "VALUES(" +
-                        "@ProviderId,@ProviderName,@EmployerAccountId, @LegalEntityId, @LegalEntityName, @LegalEntityAddress, @LegalEntityOrganisationType, @Verified, @CreatedOn)";
-
-            var result = connection.Execute(query, new
-            {
-                ProviderId = commitment.ProviderId,
-                ProviderName = commitment.ProviderName,
-                EmployerAccountId = commitment.EmployerAccountId,
-                LegalEntityId = commitment.LegalEntityId,
-                LegalEntityName = commitment.LegalEntityName,
-                LegalEntityAddress = commitment.LegalEntityAddress,
-                LegalEntityOrganisationType = commitment.LegalEntityOrganisationType,
-                Verified = verified == RelationshipOption.Undefined ? default(bool?) : true,
-                CreatedOn = DateTime.Now
-            });
-        }
-
-        public static bool HasEmployerProviderRelationship(Commitment commitment)
+        public static void CalculatePaymentOrders(long accountId)
         {
             var connection = GetConnection();
-            var query =
-                "select top 1 1 from Relationship where ProviderId=@ProviderId and EmployerAccountId=@EmployerAccountId";
-
-            var result = connection.Query<bool>(query, new
-            {
-                ProviderId = commitment.ProviderId,
-                EmployerAccountId = commitment.EmployerAccountId
-            }).FirstOrDefault();
-
-            return result;
+            connection.Execute("exec [SetPaymentOrder] @accountId", new {accountId});
         }
 
         public static void CreateTransferRequest(Commitment commitment)

@@ -55,6 +55,13 @@ namespace CommitmentsDataGen.Helpers
             }
         }
 
+        public static DateTime GetRandomDateTime()
+        {
+            var days = RandomHelper.GetRandomNumber(700);
+            var seconds = RandomHelper.GetRandomNumber(86399);
+            return DateTime.UtcNow.AddDays(-days).AddSeconds(-seconds);
+        }
+
         private static string GenerateULN()
         {
             var result = new StringBuilder();
