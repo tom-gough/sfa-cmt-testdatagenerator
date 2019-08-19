@@ -47,10 +47,26 @@ namespace CommitmentsDataGen.Generator
                 .WithEditStatus(EditStatus.Employer)
                 .WithLastAction(LastAction.None)
                 .WithCommitmentStatus(CommitmentStatus.New)
-                .WithTransferSender(30060, "Silly Bears", null)
+                .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
         }
+
+        public static void Scenario_Cohort_With_NonLevy_Employer_Draft()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithEditStatus(EditStatus.Employer)
+                .WithLastAction(LastAction.None)
+                .WithCommitmentStatus(CommitmentStatus.New)
+                .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
+            builder.Build();
+        }
+
 
 
         public static void Scenario_Transfer_Cohort_Rejected_By_Sender()
@@ -62,7 +78,7 @@ namespace CommitmentsDataGen.Generator
                 .WithDefaultEmployerProvider()
                 .WithEditStatus(EditStatus.Employer)
                 .WithLastAction(LastAction.Approve)
-                .WithTransferSender(30060, "Silly Bears", TransferApprovalStatus.Rejected)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Rejected)
                 .WithApprenticeships(10);
             builder.Build();
 
@@ -95,7 +111,7 @@ namespace CommitmentsDataGen.Generator
                 .WithDefaultEmployerProvider()
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
-                .WithTransferSender(30060, "Silly Bears", TransferApprovalStatus.Pending)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder)
                     .WithTrainingCourse(new TrainingCourse
                     {
@@ -131,6 +147,24 @@ namespace CommitmentsDataGen.Generator
 
         }
 
+        public static void Scenario_Fully_Approved_Cohort_NonLevy_WithReservation()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus
+                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithReservations()
+                .WithApprenticeships(1);
+            builder.Build();
+
+        }
 
         public static void Scenario_Fully_Approved_Transfer_Cohort()
         {
@@ -139,7 +173,7 @@ namespace CommitmentsDataGen.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithTransferSender(30060, "Silly Bears", TransferApprovalStatus.Approved)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeshipAgreementStatus(AgreementStatus
@@ -225,7 +259,7 @@ namespace CommitmentsDataGen.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithTransferSender(30060, "Silly Bears", TransferApprovalStatus.Approved)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeshipAgreementStatus(AgreementStatus
@@ -251,7 +285,7 @@ namespace CommitmentsDataGen.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithTransferSender(30060, "Silly Bears", TransferApprovalStatus.Approved)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeshipAgreementStatus(AgreementStatus
@@ -472,7 +506,7 @@ namespace CommitmentsDataGen.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithTransferSender(30060, "Silly Bears", TransferApprovalStatus.Pending)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending)
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)

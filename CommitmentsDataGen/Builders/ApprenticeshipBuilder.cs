@@ -134,7 +134,8 @@ namespace CommitmentsDataGen.Builders
                 HasChangeOfCircumstances = HasChangeOfCircumstances,
                 CreatedOn = DateTime.UtcNow,
                 StopDate = stopDate,
-                AgreedOn = CohortBuilder.AgreedOnDate
+                AgreedOn = CohortBuilder.AgreedOnDate,
+                ReservationId = CohortBuilder.HasReservations ? Guid.NewGuid() : default(Guid?)
             };
 
             //data locks

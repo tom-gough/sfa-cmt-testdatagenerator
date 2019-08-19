@@ -42,6 +42,8 @@ namespace CommitmentsDataGen.Models
             get { return HasChangeOfCircumstances ? 1 : default(int?); }
         }
 
+        public Guid? ReservationId { get; set; }
+
         public Apprenticeship()
         {
             DataLocks = new List<DataLock>();

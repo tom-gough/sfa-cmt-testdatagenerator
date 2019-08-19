@@ -60,11 +60,11 @@ namespace CommitmentsDataGen.Helpers
             var query = "insert into Apprenticeship " +
                         "([CommitmentId],[FirstName],[LastName],[ULN],[TrainingType],[TrainingCode],[TrainingName],[Cost]" +
                         ",[StartDate],[EndDate],[AgreementStatus],[PaymentStatus],[DateOfBirth],[NINumber],[EmployerRef]" +
-                        ",[ProviderRef],[CreatedOn],[AgreedOn],[PaymentOrder],[StopDate],[PauseDate],[HasHadDataLockSuccess],[PendingUpdateOriginator])" +
+                        ",[ProviderRef],[CreatedOn],[AgreedOn],[PaymentOrder],[StopDate],[PauseDate],[HasHadDataLockSuccess],[PendingUpdateOriginator],[ReservationId])" +
                         "VALUES(" +
                         "@CommitmentId,@FirstName,@LastName, @ULN, @TrainingType, @TrainingCode,@TrainingName, @Cost,@StartDate," +
                         "@EndDate,@AgreementStatus,@PaymentStatus,@DateOfBirth,@NINumber, @EmployerRef, @ProviderRef, @CreatedOn, @AgreedOn, " +
-                        "@PaymentOrder, @StopDate, @PauseDate, @HasHadDataLockSuccess,@PendingUpdateOriginator)";
+                        "@PaymentOrder, @StopDate, @PauseDate, @HasHadDataLockSuccess,@PendingUpdateOriginator,@ReservationId)";
 
             var result = connection.Execute(query, apprenticeship);
 

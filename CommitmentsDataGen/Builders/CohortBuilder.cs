@@ -12,7 +12,7 @@ namespace CommitmentsDataGen.Builders
 
         public AgreementStatus AgreementStatus { get; private set; }
         public PaymentStatus PaymentStatus { get; private set; }
-
+        public bool HasReservations { get; private set; } = true;
         public DateTime? AgreedOnDate { get; private set; }
         
         private readonly Commitment _commitment;
@@ -50,7 +50,7 @@ namespace CommitmentsDataGen.Builders
             _commitment.LegalEntityName = "MegaCorp Pharmaceuticals";
             _commitment.LegalEntityAddress = "1 High Street";
             _commitment.LegalEntityOrganisationType = 1;
-            _commitment.AccountLegalEntityPublicHashedId = "YZWX27";
+            _commitment.AccountLegalEntityPublicHashedId = "XEGE5X";
 
             _commitment.ProviderId = 10005077;
             _commitment.ProviderName = "Train-U-Good Corporation";
@@ -65,9 +65,21 @@ namespace CommitmentsDataGen.Builders
             _commitment.LegalEntityName = "MegaCorp Pharmaceuticals";
             _commitment.LegalEntityAddress = "1 High Street";
             _commitment.LegalEntityOrganisationType = 1;
-            _commitment.AccountLegalEntityPublicHashedId = "YZWX27";
+            _commitment.AccountLegalEntityPublicHashedId = "XEGE5X";
             return this;
         }
+
+        public CohortBuilder WithNonLevyEmployer()
+        {
+            _commitment.EmployerAccountId = 30060;
+            _commitment.LegalEntityId = "736281";
+            _commitment.LegalEntityName = "Rapid Logistics Co Ltd";
+            _commitment.LegalEntityAddress = "1 High Street";
+            _commitment.LegalEntityOrganisationType = 1;
+            _commitment.AccountLegalEntityPublicHashedId = "X9JE72";
+            return this;
+        }
+
 
         public CohortBuilder WithDefaultProvider()
         {
@@ -132,12 +144,22 @@ namespace CommitmentsDataGen.Builders
             return this;
         }
 
+        public CohortBuilder WithReservations()
+        {
+            HasReservations = true;
+            return this;
+        }
+
+        public CohortBuilder WithoutReservations()
+        {
+            HasReservations = false;
+            return this;
+        }
+
         public CohortBuilder WithApprenticeshipPaymentStatus(PaymentStatus status, DateTime? approvalDate = null)
         {
             PaymentStatus = status;
-
             AgreedOnDate = approvalDate.HasValue ? approvalDate.Value : default(DateTime?);
-
             return this;
         }
 
