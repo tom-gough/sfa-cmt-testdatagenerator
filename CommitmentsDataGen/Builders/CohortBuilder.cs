@@ -72,7 +72,7 @@ namespace CommitmentsDataGen.Builders
         public CohortBuilder WithNonLevyEmployer()
         {
             _commitment.EmployerAccountId = 30060;
-            _commitment.LegalEntityId = "736281";
+            _commitment.LegalEntityId = "06344082";
             _commitment.LegalEntityName = "Rapid Logistics Co Ltd";
             _commitment.LegalEntityAddress = "1 High Street";
             _commitment.LegalEntityOrganisationType = 1;

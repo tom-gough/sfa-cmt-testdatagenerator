@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using CommitmentsDataGen.Builders;
 using CommitmentsDataGen.Helpers;
 using CommitmentsDataGen.Models;
@@ -36,6 +37,19 @@ namespace CommitmentsDataGen.Generator
             builder.Build();
         }
 
+        public static void Scenario_Cohort_Approved_And_Sent_to_existing_Provider()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultEmployerProvider()
+                .WithEditStatus(EditStatus.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.EmployerAgreed)
+                .WithLastUpdatedByEmployer("Chris", "chrisfoster186@googlemail.com")
+                .WithApprenticeships(1000);
+            builder.Build();
+        }
 
         public static void Scenario_Transfer_Cohort_Employer_Draft()
         {
@@ -43,10 +57,29 @@ namespace CommitmentsDataGen.Generator
             var builder = new CohortBuilder();
 
             builder
-                .WithDefaultEmployerProvider()
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
                 .WithEditStatus(EditStatus.Employer)
                 .WithLastAction(LastAction.None)
                 .WithCommitmentStatus(CommitmentStatus.New)
+                .WithTransferSender(8194, "Mega Corp", null)
+                .WithApprenticeships(10);
+            builder.Build();
+        }
+
+        public static void Scenario_Transfer_Cohort_Provider()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithEditStatus(EditStatus.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithCommitmentStatus(CommitmentStatus.Active)
+                .WithApprenticeshipAgreementStatus(AgreementStatus
+                    .EmployerAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
@@ -75,7 +108,8 @@ namespace CommitmentsDataGen.Generator
             var builder = new CohortBuilder();
 
             builder
-                .WithDefaultEmployerProvider()
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
                 .WithEditStatus(EditStatus.Employer)
                 .WithLastAction(LastAction.Approve)
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Rejected)
@@ -91,11 +125,11 @@ namespace CommitmentsDataGen.Generator
 
             builder
                 .WithDefaultProvider()
-                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7")
+                .WithNonLevyEmployer()
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.PendingApproval, DateTime.UtcNow)
-                .WithTransferSender(8194, "Silly Bears", TransferApprovalStatus.Pending)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending)
                 .WithLastUpdatedByEmployer("Chris Foster Employer User", "chrisfoster186@googlemail.com")
                 .WithLastUpdatedByProvider("Chris Foster Provider User", "chrisfoster186@googlemail.com")
                 .WithApprenticeships(10);
@@ -606,7 +640,7 @@ namespace CommitmentsDataGen.Generator
                 .WithEditStatus(EditStatus.Provider)
                 .WithApprenticeshipAgreementStatus(AgreementStatus.EmployerAgreed)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeships(1);
+                .WithApprenticeships(500);
             builder.Build();
         }
 
@@ -619,7 +653,7 @@ namespace CommitmentsDataGen.Generator
                 .WithEditStatus(EditStatus.Employer)
                 .WithApprenticeshipAgreementStatus(AgreementStatus.ProviderAgreed)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeships(1);
+                .WithApprenticeships(500);
             builder.Build();
         }
 
