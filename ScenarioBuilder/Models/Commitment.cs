@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CommitmentsDataGen.Models
+namespace ScenarioBuilder.Models
 {
     public class Commitment
     {

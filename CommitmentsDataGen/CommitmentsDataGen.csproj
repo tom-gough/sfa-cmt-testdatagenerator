@@ -63,11 +63,6 @@
     <Compile Include="Helpers\HashingHelper.cs" />
     <Compile Include="Helpers\IdentityHelpers.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
-    <Compile Include="Models\Apprenticeship.cs" />
-    <Compile Include="Models\Commitment.cs" />
-    <Compile Include="Models\DataLock.cs" />
-    <Compile Include="Models\Enums.cs" />
-    <Compile Include="Models\TrainingCourse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -88,6 +83,12 @@
     <Content Include="Sql\SaveCommitment.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScenarioBuilder\ScenarioBuilder.csproj">
+      <Project>{cc82f821-5c63-407d-b1a4-cf2d2cddd906}</Project>
+      <Name>ScenarioBuilder</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

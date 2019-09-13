@@ -1,4 +1,4 @@
-﻿namespace CommitmentsDataGen.Models
+﻿namespace ScenarioBuilder.Models
 {
     public class TrainingCourse
     {

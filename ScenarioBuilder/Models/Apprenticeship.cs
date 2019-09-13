@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CommitmentsDataGen.Models
+namespace ScenarioBuilder.Models
 {
+
     public class Apprenticeship
     {
         public long Id { get; set; }
@@ -28,17 +29,18 @@ namespace CommitmentsDataGen.Models
         public string EmployerRef { get; set; }
         public string ProviderRef { get; set; }
         public DateTime? CreatedOn { get; set; }
-        public DateTime? AgreedOn { get; set; } 
+        public DateTime? AgreedOn { get; set; }
         public int? PaymentOrder { get; set; }
         public DateTime? StopDate { get; set; }
-        public DateTime? PauseDate { get; set; } 
+        public DateTime? PauseDate { get; set; }
         public bool HasHadDataLockSuccess { get; set; }
 
         public List<DataLock> DataLocks { get; set; }
         public bool HasChangeOfCircumstances { get; set; }
 
         public int? PendingUpdateOriginator
-        { //todo: allow originator to change
+        {
+            //todo: allow originator to change
             get { return HasChangeOfCircumstances ? 1 : default(int?); }
         }
 
@@ -48,6 +50,5 @@ namespace CommitmentsDataGen.Models
         {
             DataLocks = new List<DataLock>();
         }
-
     }
 }

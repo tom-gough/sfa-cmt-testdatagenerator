@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using CommitmentsDataGen.Helpers;
-using CommitmentsDataGen.Models;
+using ScenarioBuilder.Models;
 
 namespace CommitmentsDataGen.Builders
 {

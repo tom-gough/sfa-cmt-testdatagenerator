@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CommitmentsDataGen.Models;
 using Newtonsoft.Json;
+using ScenarioBuilder.Models;
 
 namespace CommitmentsDataGen
 {

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommitmentsDataGen.Models;
 using Dapper;
 using Newtonsoft.Json;
+using ScenarioBuilder.Models;
 
 namespace CommitmentsDataGen.Helpers
 {

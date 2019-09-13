@@ -2,7 +2,7 @@
 using System.Globalization;
 using CommitmentsDataGen.Builders;
 using CommitmentsDataGen.Helpers;
-using CommitmentsDataGen.Models;
+using ScenarioBuilder.Models;
 
 namespace CommitmentsDataGen.Generator
 {
