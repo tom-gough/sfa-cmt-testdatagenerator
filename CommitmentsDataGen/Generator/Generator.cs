@@ -66,6 +66,21 @@ namespace CommitmentsDataGen.Generator
                 .WithApprenticeships(10);
             builder.Build();
         }
+ 
+        public static void Scenario_Cohort_Employer_Draft()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithDefaultEmployer()
+                .WithEditStatus(EditStatus.Employer)
+                .WithLastAction(LastAction.None)
+                .WithCommitmentStatus(CommitmentStatus.New)
+                .WithApprenticeships(10);
+            builder.Build();
+        }
 
         public static void Scenario_Transfer_Cohort_Provider()
         {

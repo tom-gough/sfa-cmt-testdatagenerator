@@ -15,6 +15,7 @@ namespace CommitmentsDataGen.Generator
                 new Scenario("Scenario_Cohort_Sent_to_existing_Provider", Generator.Scenario_Cohort_Sent_to_existing_Provider),
                 new Scenario("Scenario_Cohort_Approved_And_Sent_to_existing_Provider", Generator.Scenario_Cohort_Approved_And_Sent_to_existing_Provider),
                 new Scenario("Transfer Draft Cohort with Non Levy Employer", Generator.Scenario_Transfer_Cohort_Employer_Draft),
+                new Scenario("Draft Cohort with Employer", Generator.Scenario_Cohort_Employer_Draft),
                 new Scenario("Transfer Cohort with Provider", Generator.Scenario_Transfer_Cohort_Provider),
                 new Scenario("Draft Cohort with Non Levy Employer", Generator.Scenario_Cohort_With_NonLevy_Employer_Draft),
                 new Scenario("Transfer Cohort Rejected by Sender", Generator.Scenario_Transfer_Cohort_Rejected_By_Sender),
