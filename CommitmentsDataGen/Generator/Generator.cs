@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Net;
 using CommitmentsDataGen.Builders;
 using CommitmentsDataGen.Helpers;
 using ScenarioBuilder.Models;
@@ -101,7 +99,7 @@ namespace CommitmentsDataGen.Generator
             builder.Build();
         }
 
-        public static void Scenario_Transfer_Cohort_NonLevy_Emnployer()
+        public static void Scenario_Transfer_Cohort_NonLevy_Employer()
         {
             var builder = new CohortBuilder();
 
