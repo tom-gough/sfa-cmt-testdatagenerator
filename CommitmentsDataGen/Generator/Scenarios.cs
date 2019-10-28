@@ -21,7 +21,7 @@ namespace CommitmentsDataGen.Generator
                 new Scenario("Draft Cohort with Non Levy Employer", Generator.Scenario_Cohort_With_NonLevy_Employer_Draft),
                 new Scenario("Transfer Cohort Rejected by Sender", Generator.Scenario_Transfer_Cohort_Rejected_By_Sender),
                 new Scenario("Transfer Cohort Pending with Sender", Generator.Scenario_Transfer_Cohort_Pending_With_Sender),
-                new Scenario("Scenario_Transfer_Cohort_Pending_With_Sender_With_FundingBands", Generator.Scenario_Transfer_Cohort_Pending_With_Sender_With_FundingBands),
+                new Scenario("Transfer cohort pending with sender with funding cap warnings", Generator.Scenario_Transfer_Cohort_Pending_With_Sender_With_FundingBands),
                 new Scenario("Fully Approved Cohort", Generator.Scenario_Fully_Approved_Cohort),
                 new Scenario("Fully Approved Cohort Non Levy (with ReservationId)", Generator.Scenario_Fully_Approved_Cohort_NonLevy_WithReservation),
                 new Scenario("Fully Approved Transfers Cohort", Generator.Scenario_Fully_Approved_Transfer_Cohort),

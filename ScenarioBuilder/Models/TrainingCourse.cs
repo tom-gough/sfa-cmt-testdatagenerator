@@ -35,6 +35,7 @@
 
         public int TrainingType => IsStandard ? 0 : 1;
         public int Level { get; set; }
+        public int MaxFunding { get; set; }
     }
 
 }

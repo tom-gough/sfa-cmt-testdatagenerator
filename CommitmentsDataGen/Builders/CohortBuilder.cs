@@ -9,6 +9,7 @@ namespace CommitmentsDataGen.Builders
     {
         public long Id => _commitment.Id;
         public bool IsPaidByTransfer => _commitment.TransferSenderId.HasValue;
+        public bool HasFundingCapWarning { get; set; }
 
         public AgreementStatus AgreementStatus { get; private set; }
         public PaymentStatus PaymentStatus { get; private set; }
@@ -135,6 +136,12 @@ namespace CommitmentsDataGen.Builders
         {
             var builder = apprenticeshipBuilder.Invoke(this);
             _apprenticeshipBuilders.Add(builder);
+            return this;
+        }
+
+        public CohortBuilder WithFundingCapWarning()
+        {
+            HasFundingCapWarning = true;
             return this;
         }
 

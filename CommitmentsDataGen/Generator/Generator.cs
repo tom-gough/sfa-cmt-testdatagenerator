@@ -173,25 +173,13 @@ namespace CommitmentsDataGen.Generator
             var builder = new CohortBuilder();
 
             builder
-                .WithDefaultEmployerProvider()
+                .WithNonLevyEmployer()
+                .WithDefaultProvider()
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending)
-                .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder)
-                    .WithTrainingCourse(new TrainingCourse
-                    {
-                        Id = "2",
-                        Title = "Software developer"
-                    })
-                    .WithCost(20000))
-                .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder)
-                    .WithTrainingCourse(new TrainingCourse
-                    {
-                        Id = "1",
-                        Title = "Network engineer"
-                    })
-                    .WithCost(16000))
-                ;
+                .WithApprenticeships(10)
+                .WithFundingCapWarning();
             builder.Build();
         }
 

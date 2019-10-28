@@ -125,7 +125,7 @@ namespace CommitmentsDataGen.Builders
                 TrainingCode = TrainingCourse.Id,
                 TrainingType = TrainingCourse.TrainingType,
                 TrainingName = TrainingCourse.ExtendedTitle,
-                Cost = Cost,
+                Cost = CohortBuilder.HasFundingCapWarning ? TrainingCourse.MaxFunding * 2 : TrainingCourse.MaxFunding,
                 AgreementStatus = CohortBuilder.AgreementStatus,
                 PaymentStatus = stopDate.HasValue ? PaymentStatus.Cancelled : CohortBuilder.PaymentStatus,
                 PaymentOrder = CohortBuilder.PaymentStatus == PaymentStatus.PendingApproval ? default(int?) : 0,
