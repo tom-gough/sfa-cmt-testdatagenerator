@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Net;
 using CommitmentsDataGen.Builders;
 using CommitmentsDataGen.Helpers;
 using ScenarioBuilder.Models;
@@ -95,6 +96,23 @@ namespace CommitmentsDataGen.Generator
                 .WithCommitmentStatus(CommitmentStatus.Active)
                 .WithApprenticeshipAgreementStatus(AgreementStatus
                     .EmployerAgreed) //todo: move these status fields into WithApprenticeships() method?
+                .WithTransferSender(8194, "Mega Corp", null)
+                .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
+            builder.Build();
+        }
+
+        public static void Scenario_Transfer_Cohort_NonLevy_Emnployer()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithEditStatus(EditStatus.Employer)
+                .WithLastAction(LastAction.Approve)
+                .WithCommitmentStatus(CommitmentStatus.Active)
+                .WithApprenticeshipAgreementStatus(AgreementStatus
+                    .ProviderAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();

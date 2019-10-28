@@ -124,7 +124,7 @@ namespace CommitmentsDataGen.Builders
                 ULN = String.IsNullOrEmpty(Uln) ? DataHelper.GetRandomUniqueULN() : Uln,
                 TrainingCode = TrainingCourse.Id,
                 TrainingType = TrainingCourse.TrainingType,
-                TrainingName = TrainingCourse.TitleRestrictedLength,
+                TrainingName = TrainingCourse.ExtendedTitle,
                 Cost = Cost,
                 AgreementStatus = CohortBuilder.AgreementStatus,
                 PaymentStatus = stopDate.HasValue ? PaymentStatus.Cancelled : CohortBuilder.PaymentStatus,
