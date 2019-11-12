@@ -1,4 +1,4 @@
-﻿namespace CommitmentsDataGen.Helpers
+﻿namespace ScenarioBuilder.Helpers
 {
     public static class IdentityHelpers
     {

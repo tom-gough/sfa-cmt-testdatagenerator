@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CommitmentsDataGen.Helpers
+namespace ScenarioBuilder.Helpers
 {
     public static class RandomHelper
     {

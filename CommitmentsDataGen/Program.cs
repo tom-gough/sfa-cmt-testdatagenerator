@@ -1,6 +1,6 @@
 ﻿using System;
 using CommitmentsDataGen.Generator;
-using CommitmentsDataGen.Helpers;
+using ScenarioBuilder.Helpers;
 
 namespace CommitmentsDataGen
 {

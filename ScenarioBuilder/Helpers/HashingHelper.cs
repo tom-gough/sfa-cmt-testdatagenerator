@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using HashidsNet;
 
-namespace CommitmentsDataGen.Helpers
+namespace ScenarioBuilder.Helpers
 {
     public static class HashingHelper
     {

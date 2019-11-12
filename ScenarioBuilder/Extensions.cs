@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CommitmentsDataGen.Helpers;
+using ScenarioBuilder.Helpers;
 
-namespace CommitmentsDataGen
+namespace ScenarioBuilder
 {
     public static class Extensions
     {

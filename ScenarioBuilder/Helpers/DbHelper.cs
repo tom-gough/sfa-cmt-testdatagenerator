@@ -2,11 +2,12 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
+using CommitmentsDataGen;
 using Dapper;
 using Newtonsoft.Json;
 using ScenarioBuilder.Models;
 
-namespace CommitmentsDataGen.Helpers
+namespace ScenarioBuilder.Helpers
 {
     public static class DbHelper
     {
