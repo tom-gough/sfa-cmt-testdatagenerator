@@ -24,5 +24,12 @@
             return _datalockStatusId;
         }
 
+        public static void ClearAll()
+        {
+            _cohortId = 0;
+            _apprenticeshipId = 0;
+            _datalockStatusId = 0;
+        }
+
     }
 }
