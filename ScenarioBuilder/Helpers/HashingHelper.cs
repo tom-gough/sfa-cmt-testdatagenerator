@@ -17,7 +17,7 @@ namespace ScenarioBuilder.Helpers
             HashGenerator = new Hashids(salt, 6, hashAlphabet);
         }
 
-        public static string Encoder(long id)
+        public static string Encode(long id)
         {
             return HashGenerator.EncodeLong(id);
         }

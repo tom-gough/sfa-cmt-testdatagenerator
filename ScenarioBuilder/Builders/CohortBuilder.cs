@@ -27,7 +27,7 @@ namespace ScenarioBuilder.Builders
             _commitment = new Commitment
             {
                 Id = id,
-                Reference = HashingHelper.Encoder(id),
+                Reference = HashingHelper.Encode(id),
                 CommitmentStatus = CommitmentStatus.Active,
                 EditStatus = EditStatus.Employer,
                 CreatedOn = System.DateTime.Now,
