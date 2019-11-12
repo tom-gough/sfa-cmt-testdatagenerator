@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CommitmentsDataGen.Generator
+namespace ScenarioBuilder.Generator
 {
     public static class Scenarios
     {

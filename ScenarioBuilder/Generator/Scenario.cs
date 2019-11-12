@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CommitmentsDataGen.Generator
+namespace ScenarioBuilder.Generator
 {
     public class Scenario
     {

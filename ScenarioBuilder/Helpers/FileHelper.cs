@@ -3,7 +3,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using ScenarioBuilder.Models;
 
-namespace CommitmentsDataGen
+namespace ScenarioBuilder.Helpers
 {
     public static class FileHelper
     {

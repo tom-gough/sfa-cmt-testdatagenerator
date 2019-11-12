@@ -1,9 +1,9 @@
 ﻿using System;
-using CommitmentsDataGen.Builders;
+using ScenarioBuilder.Builders;
 using ScenarioBuilder.Helpers;
 using ScenarioBuilder.Models;
 
-namespace CommitmentsDataGen.Generator
+namespace ScenarioBuilder.Generator
 {
     public static class Generator
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ScenarioBuilder.Helpers;
 using ScenarioBuilder.Models;
 
-namespace CommitmentsDataGen.Builders
+namespace ScenarioBuilder.Builders
 {
     public class CohortBuilder
     {
