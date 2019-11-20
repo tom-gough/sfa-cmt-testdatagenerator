@@ -9,10 +9,8 @@ namespace ScenarioBuilder.Helpers
 
         static HashingHelper()
         {
-            var settings = new System.Configuration.AppSettingsReader();
-
-            var salt = (string) settings.GetValue("HashSalt", typeof(string));
-            var hashAlphabet = (string)settings.GetValue("HashAlphabet", typeof(string));
+            var salt = ConfigurationHelper.Configuration.HashSalt;
+            var hashAlphabet = ConfigurationHelper.Configuration.HashAlphabet;
 
             HashGenerator = new Hashids(salt, 6, hashAlphabet);
         }

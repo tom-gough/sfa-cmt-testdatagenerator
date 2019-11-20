@@ -5,7 +5,6 @@ namespace ScenarioBuilder.Generator
     public static class Scenarios
     {
         private static readonly List<Scenario> _scenarios;
-
         static Scenarios()
         {
             _scenarios = new List<Scenario>

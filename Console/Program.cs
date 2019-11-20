@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Net.Mime;
 using ScenarioBuilder.Generator;
 using ScenarioBuilder.Helpers;
 
@@ -8,6 +10,8 @@ namespace Console
     {
         static void Main(string[] args)
         {
+            ConfigurationHelper.Initialise(Directory.GetCurrentDirectory());
+
             System.Console.ForegroundColor = ConsoleColor.Cyan;
             System.Console.WriteLine("Commitments Test Data Generator");
             System.Console.WriteLine();

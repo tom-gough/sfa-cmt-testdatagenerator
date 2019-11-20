@@ -225,7 +225,8 @@ namespace ScenarioBuilder.Generator
             var builder = new CohortBuilder();
 
             builder
-                .WithDefaultEmployerProvider()
+                .WithNonLevyEmployer()
+                .WithDefaultProvider()
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
@@ -605,7 +606,7 @@ namespace ScenarioBuilder.Generator
 
         public static void ManyApproved()
         {
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 5000; i++)
             {
                 var builder = new CohortBuilder();
 

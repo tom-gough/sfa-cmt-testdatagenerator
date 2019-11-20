@@ -10,17 +10,10 @@ namespace ScenarioBuilder.Helpers
 {
     public static class DbHelper
     {
-        private static string DbConnectionString { get; set; }
-
         private static DbConnection GetConnection()
         {
-            if (String.IsNullOrEmpty(DbConnectionString))
-            {
-                var settings = new System.Configuration.AppSettingsReader();
-                DbConnectionString = (string)settings.GetValue("DbConnectionString", typeof(string));
-            }
-
-            return new SqlConnection(DbConnectionString);
+            var connectionString = ConfigurationHelper.Configuration.DbConnectionString;
+            return new SqlConnection(connectionString);
         }
 
         public static void ClearDb()

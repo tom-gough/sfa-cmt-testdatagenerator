@@ -124,7 +124,7 @@ namespace ScenarioBuilder.Builders
                 ULN = String.IsNullOrEmpty(Uln) ? DataHelper.GetRandomUniqueULN() : Uln,
                 TrainingCode = TrainingCourse.Id,
                 TrainingType = TrainingCourse.TrainingType,
-                TrainingName = TrainingCourse.ExtendedTitle,
+                TrainingName = TrainingCourse.TitleRestrictedLength,
                 Cost = CohortBuilder.HasFundingCapWarning ? TrainingCourse.MaxFunding * 2 : TrainingCourse.MaxFunding,
                 AgreementStatus = CohortBuilder.AgreementStatus,
                 PaymentStatus = stopDate.HasValue ? PaymentStatus.Cancelled : CohortBuilder.PaymentStatus,
