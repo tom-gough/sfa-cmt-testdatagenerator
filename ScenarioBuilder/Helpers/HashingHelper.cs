@@ -6,13 +6,13 @@ namespace ScenarioBuilder.Helpers
     public static class HashingHelper
     {
         private static readonly Hashids HashGenerator;
+        private static readonly Hashids AccountLegalEntityHashGenerator;
 
         static HashingHelper()
         {
-            var salt = ConfigurationHelper.Configuration.HashSalt;
-            var hashAlphabet = ConfigurationHelper.Configuration.HashAlphabet;
-
-            HashGenerator = new Hashids(salt, 6, hashAlphabet);
+            var config = ConfigurationHelper.Configuration;
+            HashGenerator = new Hashids(config.HashSalt, 6,config.HashAlphabet);
+            AccountLegalEntityHashGenerator = new Hashids(config.AccountLegalEntityHashSalt, 6, config.AccountLegalEntityHashAlphabet);
         }
 
         public static string Encode(long id)
@@ -24,5 +24,15 @@ namespace ScenarioBuilder.Helpers
         {
             return HashGenerator.DecodeLong(hash).First();
         }
+
+        public static string EncodeAccountLegalEntityId(long id)
+        {
+            return AccountLegalEntityHashGenerator.EncodeLong(id);
+        }
+        public static long DecodeAccountLegalEntityId(string hash)
+        {
+            return AccountLegalEntityHashGenerator.DecodeLong(hash).First();
+        }
+
     }
 }

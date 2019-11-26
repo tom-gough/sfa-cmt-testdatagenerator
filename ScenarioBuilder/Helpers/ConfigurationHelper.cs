@@ -28,5 +28,7 @@ namespace ScenarioBuilder.Helpers
         public string DbConnectionString { get; set; }
         public string HashSalt { get; set; }
         public string HashAlphabet { get; set; }
+        public string AccountLegalEntityHashSalt { get; set; }
+        public string AccountLegalEntityHashAlphabet { get; set; }
     }
 }

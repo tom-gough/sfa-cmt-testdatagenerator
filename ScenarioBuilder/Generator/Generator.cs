@@ -127,8 +127,9 @@ namespace ScenarioBuilder.Generator
                 .WithEditStatus(EditStatus.Employer)
                 .WithLastAction(LastAction.None)
                 .WithCommitmentStatus(CommitmentStatus.New)
-                .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
+                .WithApprenticeships(10);
             builder.Build();
+
         }
 
 
