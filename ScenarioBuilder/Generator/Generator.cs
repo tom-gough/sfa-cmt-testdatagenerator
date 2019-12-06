@@ -81,6 +81,21 @@ namespace ScenarioBuilder.Generator
             builder.Build();
         }
 
+        public static void Scenario_Cohort_Provider_ReadyForApproval()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithDefaultEmployer()
+                .WithEditStatus(EditStatus.Provider)
+                .WithLastAction(LastAction.Amend)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.EmployerAgreed)
+                .WithCommitmentStatus(CommitmentStatus.Active)
+                .WithApprenticeships(10);
+            builder.Build();
+        }
+
         public static void Scenario_Transfer_Cohort_Provider()
         {
 
@@ -114,6 +129,28 @@ namespace ScenarioBuilder.Generator
                 .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
+        }
+
+        public static void Scenario_NonLevy_Employer_Many_Cohorts()
+        {
+            CohortBuilder builder;
+
+            for (var i = 0; i < 100; i++)
+            {
+                builder = new CohortBuilder();
+
+                builder
+                    .WithDefaultProvider()
+                    .WithNonLevyEmployer()
+                    .WithEditStatus(EditStatus.Employer)
+                    .WithLastAction(LastAction.Approve)
+                    .WithCommitmentStatus(CommitmentStatus.Active)
+                    .WithApprenticeshipAgreementStatus(AgreementStatus
+                        .ProviderAgreed) //todo: move these status fields into WithApprenticeships() method?
+                    .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder))
+                    .WithMessages(10);
+                builder.Build();
+            }
         }
 
         public static void Scenario_Cohort_With_NonLevy_Employer_Draft()
@@ -607,7 +644,7 @@ namespace ScenarioBuilder.Generator
 
         public static void ManyApproved()
         {
-            for (var i = 0; i < 5000; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var builder = new CohortBuilder();
 

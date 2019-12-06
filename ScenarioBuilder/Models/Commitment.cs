@@ -32,5 +32,6 @@ namespace ScenarioBuilder.Models
         public string AccountLegalEntityPublicHashedId { get; set; }
 
         public List<Apprenticeship> Apprenticeships { get; set; }
+        public List<Message> Messages { get; set; }
     }
 }

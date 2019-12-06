@@ -112,6 +112,37 @@ namespace ScenarioBuilder.Helpers
             });
         }
 
+        public static void CreateMessages(Commitment commitment, int messageCount)
+        {
+            var connection = GetConnection();
+
+            short createdBy = 0;
+
+            for (var i = 0; i < messageCount; i++)
+            {
+                var message = new Message
+                {
+                    CommitmentId = commitment.Id,
+                    Author = "Test",
+                    CreatedBy = createdBy,
+                    Text = $"This is test message {i+1} for cohort {commitment.Id}"
+                };
+
+                var query = "insert into [Message] " +
+                            "([CommitmentId],[Text],[CreatedDateTime],[Author],[CreatedBy])" +
+                            "VALUES(" +
+                            "@CommitmentId, @Text, GETDATE(), @Author, @CreatedBy)";
+
+                connection.Execute(query, message);
+
+                createdBy++;
+                if (createdBy > 1)
+                {
+                    createdBy = 0;
+                }
+            }
+        }
+
         public static void SaveDataLock(Apprenticeship apprenticeship, DataLock datalock)
         {
             var connection = GetConnection();

@@ -14,6 +14,7 @@ namespace ScenarioBuilder.Builders
         public AgreementStatus AgreementStatus { get; private set; }
         public PaymentStatus PaymentStatus { get; private set; }
         public bool HasReservations { get; private set; } = true;
+        public int Messages { get; private set; }
         public DateTime? AgreedOnDate { get; private set; }
         
         private readonly Commitment _commitment;
@@ -204,6 +205,11 @@ namespace ScenarioBuilder.Builders
                 DbHelper.CreateTransferRequest(_commitment);
             }
 
+            if (Messages > 0)
+            {
+                DbHelper.CreateMessages(_commitment, Messages);
+            }
+
             DbHelper.CalculatePaymentOrders(_commitment.EmployerAccountId);
 
 
@@ -236,5 +242,10 @@ namespace ScenarioBuilder.Builders
             return this;
         }
 
+        public CohortBuilder WithMessages(int numberOfMessages)
+        {
+            Messages = numberOfMessages;
+            return this;
+        }
     }
 }
