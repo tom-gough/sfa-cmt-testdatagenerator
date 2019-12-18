@@ -125,7 +125,7 @@ namespace ScenarioBuilder.Helpers
                     CommitmentId = commitment.Id,
                     Author = "Test",
                     CreatedBy = createdBy,
-                    Text = $"This is test message {i+1} for cohort {commitment.Id}"
+                    Text = TextHelper.GetRandomText(RandomHelper.GetRandomNumber(6))
                 };
 
                 var query = "insert into [Message] " +

@@ -41,6 +41,7 @@ namespace ScenarioBuilder.Generator
                 new Scenario("Reusing a ULN when it is pending with transfer sender", Generator.ReusingUlnWhenPendingWithSender),
                 new Scenario("Two Approved Apprenticeships With Same Uln", Generator.TwoApprovedApprenticeshipsWithSameUln),
                 new Scenario("A great many approved cohorts", Generator.ManyApproved),
+                new Scenario("A great many approved cohorts (non levy)", Generator.ManyApprovedNonLevy),
                 new Scenario("A single approved apprenticeship", Generator.SingleApproved),
                 new Scenario("A very large cohort ready for provider to approve", Generator.Scenario_Very_Large_Cohort),
                 new Scenario("A very large cohort ready for employer to approve", Generator.Scenario_Very_Large_Cohort_Ready_For_Employer),

@@ -502,7 +502,8 @@ namespace ScenarioBuilder.Generator
             var builder = new CohortBuilder();
 
             builder
-                .WithDefaultEmployerProvider()
+                .WithNonLevyEmployer()
+                .WithDefaultProvider()
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
@@ -688,6 +689,56 @@ namespace ScenarioBuilder.Generator
                 builder.Build();
             }
         }
+
+        public static void ManyApprovedNonLevy()
+        {
+            for (var i = 0; i < 100; i++)
+            {
+                var builder = new CohortBuilder();
+
+                if (RandomHelper.GetRandomNumber(10) > 8)
+                {
+                    builder
+                        .WithNonLevyEmployer()
+                        .WithDefaultProvider()
+                        .WithEditStatus(EditStatus.Both)
+                        .WithLastAction(LastAction.Approve)
+                        .WithApprenticeshipAgreementStatus(AgreementStatus
+                            .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                        .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                        .WithApprenticeships(1);
+                }
+                else
+                {
+                    DataLockType datalockType = DataLockType.Course;
+                    var r = RandomHelper.GetRandomNumber(3);
+                    if (r == 1)
+                    {
+                        datalockType = DataLockType.Price;
+                    }
+
+                    if (r == 2)
+                    {
+                        datalockType = DataLockType.MultiPrice;
+                    }
+
+                    builder
+                        .WithNonLevyEmployer()
+                        .WithDefaultProvider()
+                        .WithEditStatus(EditStatus.Both)
+                        .WithLastAction(LastAction.Approve)
+                        .WithApprenticeshipAgreementStatus(AgreementStatus
+                            .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                        .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                        .WithApprenticeship(cohort =>
+                            new ApprenticeshipBuilder(builder)
+                                .WithDataLock(datalockType));
+                }
+
+                builder.Build();
+            }
+        }
+
 
         public static void Scenario_Very_Large_Cohort()
         {
