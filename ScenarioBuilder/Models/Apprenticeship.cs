@@ -37,11 +37,15 @@ namespace ScenarioBuilder.Models
 
         public List<DataLock> DataLocks { get; set; }
         public bool HasChangeOfCircumstances { get; set; }
+        public Originator ChangeOfCircumstancesOriginator { get; set; }
 
-        public int? PendingUpdateOriginator
+        public Originator? PendingUpdateOriginator
         {
-            //todo: allow originator to change
-            get { return HasChangeOfCircumstances ? 1 : default(int?); }
+            get
+            {
+                if (!HasChangeOfCircumstances) return null;
+                return ChangeOfCircumstancesOriginator;
+            }
         }
 
         public Guid? ReservationId { get; set; }

@@ -15,6 +15,7 @@ namespace ScenarioBuilder.Generator
                 new Scenario("Scenario_Cohort_Approved_And_Sent_to_existing_Provider", Generator.Scenario_Cohort_Approved_And_Sent_to_existing_Provider),
                 new Scenario("Transfer Draft Cohort with Non Levy Employer", Generator.Scenario_Transfer_Cohort_Employer_Draft),
                 new Scenario("Draft Cohort with Employer", Generator.Scenario_Cohort_Employer_Draft),
+                new Scenario("Cohort ready for NonLevy Employer approval", Generator.Scenario_Cohort_NonLevyEmployer_ReadyForApproval),
                 new Scenario("Cohort ready for Provider approval", Generator.Scenario_Cohort_Provider_ReadyForApproval),
                 new Scenario("Transfer Cohort with Provider", Generator.Scenario_Transfer_Cohort_Provider),
                 new Scenario("Transfer Cohort with Non Levy Employer", Generator.Scenario_Transfer_Cohort_NonLevy_Employer),
@@ -36,6 +37,8 @@ namespace ScenarioBuilder.Generator
                 new Scenario("CourseDataLockWithoutDataLockSuccess", Generator.CourseDataLockWithoutDataLockSuccess),
                 new Scenario("MulitplePriceDataLocks", Generator.MulitplePriceDataLocks),
                 new Scenario("PriceDataLockAndPendingChangeOfCircumstances", Generator.PriceDataLockAndPendingChangeOfCircumstances),
+                new Scenario("Pending Change of Circs - Employer originated (NonLevy)", Generator.NonLevy_PendingChangeOfCircumstances_EmployerOriginated),
+                new Scenario("Pending Change of Circs - Provider originated (NonLevy)", Generator.NonLevy_PendingChangeOfCircumstances_ProviderOriginated),
                 new Scenario("Price Change through DataLock", Generator.DataLockDueToPriceChangeMidway),
                 new Scenario("Reusing a ULN", Generator.ReusingUln),
                 new Scenario("Reusing a ULN when it is pending with transfer sender", Generator.ReusingUlnWhenPendingWithSender),
@@ -48,7 +51,8 @@ namespace ScenarioBuilder.Generator
                 new Scenario("Scenario_Multiple_Approved_Apprenticeships_Employers_And_Providers", Generator.Scenario_Multiple_Approved_Apprenticeships_Employers_And_Providers),
                 new Scenario("ManyApproved_And_Very_Large_Cohort_Ready_For_Employer", Generator.ManyApproved_And_Very_Large_Cohort_Ready_For_Employer),
                 new Scenario("Employer With Multiple Providers", Generator.EmployerWithMultipleProviders),
-                new Scenario("Employer With Multiple Providers V2", Generator.EmployerWithMultipleProvidersV2)
+                new Scenario("Employer With Multiple Providers V2", Generator.EmployerWithMultipleProvidersV2),
+                new Scenario("Apprentice_Stopped_And_Restarted_NonLevy", Generator.Apprentice_Stopped_And_Restarted_NonLevy)
             };
         }
 

@@ -173,7 +173,7 @@ namespace ScenarioBuilder.Helpers
             });
         }
 
-        public static void CreateChangeOfCircumstances(Apprenticeship apprenticeship)
+        public static void CreateChangeOfCircumstances(Apprenticeship apprenticeship, Originator originator = Originator.Employer)
         {
             //todo: allow different originators
             
@@ -186,7 +186,7 @@ namespace ScenarioBuilder.Helpers
             var result = connection.Execute(query, new
             {
                 ApprenticeshipId = apprenticeship.Id,
-                Originator = 1,
+                Originator = originator,
                 Status = 0,
                 FirstName = "Jonny Boo"
             });

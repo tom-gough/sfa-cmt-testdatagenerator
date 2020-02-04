@@ -24,6 +24,8 @@ namespace ScenarioBuilder.Builders
         {
             var id = IdentityHelpers.GetNextCohortId();
 
+            Messages = 1;
+
             //todo: most of this should be pushed into WithXXX methods
             _commitment = new Commitment
             {
@@ -196,7 +198,7 @@ namespace ScenarioBuilder.Builders
 
                 if (apprenticeship.HasChangeOfCircumstances)
                 {
-                    DbHelper.CreateChangeOfCircumstances(apprenticeship);
+                    DbHelper.CreateChangeOfCircumstances(apprenticeship, apprenticeship.ChangeOfCircumstancesOriginator);
                 }
             }
 

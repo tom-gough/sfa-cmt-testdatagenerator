@@ -81,6 +81,21 @@ namespace ScenarioBuilder.Generator
             builder.Build();
         }
 
+        public static void Scenario_Cohort_NonLevyEmployer_ReadyForApproval()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithEditStatus(EditStatus.Employer)
+                .WithLastAction(LastAction.Approve)
+                .WithCommitmentStatus(CommitmentStatus.Active)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.ProviderAgreed)
+                .WithApprenticeships(10);
+            builder.Build();
+        }
+
         public static void Scenario_Cohort_Provider_ReadyForApproval()
         {
             var builder = new CohortBuilder();
@@ -513,13 +528,55 @@ namespace ScenarioBuilder.Generator
                         //.WithDataLockSuccess()
                         .WithStartOption(ApprenticeshipStartedOption.Started)
                         .WithDataLock(DataLockType.Price)
-                        .WithChangeOfCircumstances()
+                        .WithChangeOfCircumstances(Originator.Employer)
                 );
             builder.Build();
 
 
 
         }
+
+
+        public static void NonLevy_PendingChangeOfCircumstances_EmployerOriginated()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithNonLevyEmployer()
+                .WithDefaultProvider()
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(ApprenticeshipStartedOption.Started)
+                        .WithChangeOfCircumstances(Originator.Employer)
+                );
+            builder.Build();
+        }
+
+        public static void NonLevy_PendingChangeOfCircumstances_ProviderOriginated()
+        {
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithNonLevyEmployer()
+                .WithDefaultProvider()
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(ApprenticeshipStartedOption.Started)
+                        .WithChangeOfCircumstances(Originator.Provider)
+                );
+            builder.Build();
+        }
+
 
         public static void ReusingUln()
         {
@@ -645,7 +702,7 @@ namespace ScenarioBuilder.Generator
 
         public static void ManyApproved()
         {
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 500; i++)
             {
                 var builder = new CohortBuilder();
 
@@ -692,7 +749,7 @@ namespace ScenarioBuilder.Generator
 
         public static void ManyApprovedNonLevy()
         {
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 500; i++)
             {
                 var builder = new CohortBuilder();
 
@@ -738,6 +795,49 @@ namespace ScenarioBuilder.Generator
                 builder.Build();
             }
         }
+
+
+
+
+        public static void Apprentice_Stopped_And_Restarted_NonLevy()
+        {
+            
+
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2018, 6, 1))
+                        .WithStopOption(new DateTime(2018, 6, 1))
+                );
+            builder.Build();
+
+
+            builder = new CohortBuilder();
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithEditStatus(EditStatus.Employer)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2018, 6, 1))
+                );
+            builder.Build();
+
+        }
+
 
 
         public static void Scenario_Very_Large_Cohort()

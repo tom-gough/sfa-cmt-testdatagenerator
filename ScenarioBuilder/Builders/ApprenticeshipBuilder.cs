@@ -14,6 +14,7 @@ namespace ScenarioBuilder.Builders
         public ApprenticeshipStopOption Stopped { get; private set; }
         public bool HasHadDataLockSuccess { get; private set; }
         public bool HasChangeOfCircumstances { get; set; }
+        public Originator ChangeOfCircumstancesOriginator { get; set; }
         public TrainingCourse TrainingCourse { get; private set; }
         public int Cost { get; private set; }
         public string Uln { get; private set; }
@@ -89,9 +90,10 @@ namespace ScenarioBuilder.Builders
             return this;
         }
 
-        public ApprenticeshipBuilder WithChangeOfCircumstances()
+        public ApprenticeshipBuilder WithChangeOfCircumstances(Originator originator)
         {
             HasChangeOfCircumstances = true;
+            ChangeOfCircumstancesOriginator = originator;
             return this;
         }
 
@@ -131,6 +133,7 @@ namespace ScenarioBuilder.Builders
                 PaymentOrder = CohortBuilder.PaymentStatus == PaymentStatus.PendingApproval ? default(int?) : 0,
                 HasHadDataLockSuccess = HasHadDataLockSuccess,
                 HasChangeOfCircumstances = HasChangeOfCircumstances,
+                ChangeOfCircumstancesOriginator = ChangeOfCircumstancesOriginator,
                 CreatedOn = DateTime.UtcNow,
                 StopDate = stopDate,
                 AgreedOn = CohortBuilder.AgreedOnDate,
