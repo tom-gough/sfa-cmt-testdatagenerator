@@ -22,7 +22,8 @@
 	[TransferApprovalActionedByEmployerName],
 	[TransferApprovalActionedByEmployerEmail],
 	[TransferApprovalActionedOn],
-	[AccountLegalEntityPublicHashedId]
+	[AccountLegalEntityPublicHashedId],
+	[AccountLegalEntityId]
 )
 VALUES
 (
@@ -48,5 +49,6 @@ VALUES
     @TransferApprovalActionedByEmployerName,
     @TransferApprovalActionedByEmployerEmail,
 	@TransferApprovalActionedOn,
-	@AccountLegalEntityPublicHashedId
+	@AccountLegalEntityPublicHashedId,
+	@AccountLegalEntityId
 )

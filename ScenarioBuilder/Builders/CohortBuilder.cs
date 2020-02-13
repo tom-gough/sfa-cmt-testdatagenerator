@@ -70,6 +70,7 @@ namespace ScenarioBuilder.Builders
             _commitment.LegalEntityAddress = "1 High Street";
             _commitment.LegalEntityOrganisationType = 1;
             _commitment.AccountLegalEntityPublicHashedId = "XEGE5X";
+            _commitment.AccountLegalEntityId = 2817;
             return this;
         }
 
@@ -81,6 +82,7 @@ namespace ScenarioBuilder.Builders
             _commitment.LegalEntityAddress = "1 High Street";
             _commitment.LegalEntityOrganisationType = 1;
             _commitment.AccountLegalEntityPublicHashedId = "X9JE72";
+            _commitment.AccountLegalEntityId = 645;
             return this;
         }
 
@@ -92,7 +94,7 @@ namespace ScenarioBuilder.Builders
             return this;
         }
 
-        public CohortBuilder WithEmployer(long accountId, string legalEntityId, string name, string accountLegalEntityPublicHashedId)
+        public CohortBuilder WithEmployer(long accountId, string legalEntityId, string name, string accountLegalEntityPublicHashedId, long accountLegalEntityId)
         {
             _commitment.EmployerAccountId = accountId;
             _commitment.LegalEntityId = legalEntityId;
@@ -100,6 +102,7 @@ namespace ScenarioBuilder.Builders
             _commitment.LegalEntityAddress = "Some address";
             _commitment.LegalEntityOrganisationType = 1;
             _commitment.AccountLegalEntityPublicHashedId = accountLegalEntityPublicHashedId;
+            _commitment.AccountLegalEntityId = accountLegalEntityId;
             return this;
         }
 

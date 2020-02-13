@@ -924,7 +924,7 @@ namespace ScenarioBuilder.Generator
 
             builder = new CohortBuilder();
             builder
-                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7")
+                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7", 645)
                 .WithDefaultProvider()
                 .WithEditStatus(EditStatus.Both)
                 .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
@@ -935,7 +935,7 @@ namespace ScenarioBuilder.Generator
 
             builder = new CohortBuilder();
             builder
-                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7")
+                .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7", 645)
                 .WithProvider(10005077, "Train-U-Good Corporation")
                 .WithEditStatus(EditStatus.Both)
                 .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)

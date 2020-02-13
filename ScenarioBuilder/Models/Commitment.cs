@@ -8,6 +8,7 @@ namespace ScenarioBuilder.Models
         public long Id { get; set; }
         public string Reference { get; set; }
         public long EmployerAccountId { get; set; }
+        public long AccountLegalEntityId { get; set; }
         public string LegalEntityId { get; set; }
         public string LegalEntityName { get; set; }
         public string LegalEntityAddress { get; set; }
