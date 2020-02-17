@@ -224,6 +224,7 @@ namespace ScenarioBuilder.Builders
         public CohortBuilder WithLastAction(LastAction lastAction)
         {
             _commitment.LastAction = lastAction;
+            _commitment.IsDraft = lastAction == LastAction.None;
             return this;
         }
 
