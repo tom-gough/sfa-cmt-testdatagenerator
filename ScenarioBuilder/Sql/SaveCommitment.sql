@@ -24,7 +24,8 @@
 	[TransferApprovalActionedOn],
 	[AccountLegalEntityPublicHashedId],
 	[AccountLegalEntityId],
-	[IsDraft]
+	[IsDraft],
+	[WithParty]
 )
 VALUES
 (
@@ -52,5 +53,6 @@ VALUES
 	@TransferApprovalActionedOn,
 	@AccountLegalEntityPublicHashedId,
 	@AccountLegalEntityId,
-	@IsDraft
+	@IsDraft,
+	@WithParty
 )

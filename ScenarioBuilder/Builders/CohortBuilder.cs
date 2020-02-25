@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using ScenarioBuilder.Helpers;
 using ScenarioBuilder.Models;
 
@@ -116,6 +117,22 @@ namespace ScenarioBuilder.Builders
         public CohortBuilder WithEditStatus(EditStatus status)
         {
             _commitment.EditStatus = status;
+
+            //todo: this doesn't work with transfer sender
+            if (status == EditStatus.Employer)
+            {
+                _commitment.WithParty = Party.Employer;
+            }
+            else if (status == EditStatus.Provider)
+            {
+                _commitment.WithParty = Party.Provider;
+            }
+            else
+            {
+                _commitment.WithParty = Party.TransferSender;
+                //throw new NotImplementedException();
+            }
+
             return this;
         }
 
