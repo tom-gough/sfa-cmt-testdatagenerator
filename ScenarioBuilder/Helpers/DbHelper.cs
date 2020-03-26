@@ -73,11 +73,11 @@ namespace ScenarioBuilder.Helpers
             }
         }
 
-        public static void CalculatePaymentOrders(long accountId)
-        {
-            var connection = GetConnection();
-            connection.Execute("exec [SetPaymentOrder] @accountId", new {accountId});
-        }
+        //public static void CalculatePaymentOrders(long accountId)
+        //{
+        //    var connection = GetConnection();
+        //    connection.Execute("exec [SetPaymentOrder] @accountId", new {accountId});
+        //}
 
         public static void CreateTransferRequest(Commitment commitment)
         {

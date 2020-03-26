@@ -232,7 +232,7 @@ namespace ScenarioBuilder.Builders
                 DbHelper.CreateMessages(_commitment, Messages);
             }
 
-            DbHelper.CalculatePaymentOrders(_commitment.EmployerAccountId);
+            //DbHelper.CalculatePaymentOrders(_commitment.EmployerAccountId);
 
 
             return _commitment;
