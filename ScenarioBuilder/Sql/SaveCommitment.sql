@@ -23,7 +23,9 @@
 	[TransferApprovalActionedByEmployerEmail],
 	[TransferApprovalActionedOn],
 	[AccountLegalEntityPublicHashedId],
-	[AccountLegalEntityId]
+	[AccountLegalEntityId],
+	[IsDraft],
+	[WithParty]
 )
 VALUES
 (
@@ -50,5 +52,7 @@ VALUES
     @TransferApprovalActionedByEmployerEmail,
 	@TransferApprovalActionedOn,
 	@AccountLegalEntityPublicHashedId,
-	@AccountLegalEntityId
+	@AccountLegalEntityId,
+	@IsDraft,
+	@WithParty
 )

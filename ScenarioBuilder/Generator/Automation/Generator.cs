@@ -1,4 +1,5 @@
-﻿using ScenarioBuilder.Builders;
+﻿using System;
+using ScenarioBuilder.Builders;
 using ScenarioBuilder.Models;
 
 namespace ScenarioBuilder.Generator.Automation
@@ -42,6 +43,28 @@ namespace ScenarioBuilder.Generator.Automation
                 builder.WithNonLevyEmployer();
             }
 
+            builder.Build();
+        }
+
+
+        public static void Single_Stopped_Apprentice()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithNonLevyEmployer()
+                .WithDefaultProvider()
+                .WithEditStatus(EditStatus.Both)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithUln("1000001880")
+                        .WithStartOption(new DateTime(2019, 6, 1))
+                        .WithEndOption(new DateTime(2020, 6, 1))
+                        .WithStopOption(new DateTime(2020, 2, 1))
+                );
             builder.Build();
         }
     }

@@ -17,8 +17,10 @@ namespace ScenarioBuilder.Models
         public string ProviderName { get; set; }
         public CommitmentStatus CommitmentStatus { get; set; }
         public EditStatus EditStatus { get; set; }
+        public Party WithParty { get; set; }
         public DateTime CreatedOn { get; set; }
         public LastAction LastAction { get; set; }
+        public bool IsDraft { get; set; }
         public string LastUpdatedByEmployerName { get; set; }
         public string LastUpdatedByEmployerEmail { get; set; }
         public string LastUpdatedByProviderName { get; set; }
