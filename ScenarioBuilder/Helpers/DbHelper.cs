@@ -59,7 +59,7 @@ namespace ScenarioBuilder.Helpers
             var result = connection.Execute(query, apprenticeship);
 
             //price history
-            if (apprenticeship.AgreementStatus == AgreementStatus.BothAgreed)
+            if (apprenticeship.PaymentStatus != PaymentStatus.PendingApproval)
             {
                 var query2 = "insert into PriceHistory ([ApprenticeshipId],[Cost],[FromDate]) " +
                         "VALUES (@ApprenticeshipId,@Cost,@FromDate)";
