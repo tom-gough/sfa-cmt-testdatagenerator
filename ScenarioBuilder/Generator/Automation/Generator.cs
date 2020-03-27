@@ -56,7 +56,7 @@ namespace ScenarioBuilder.Generator.Automation
                 .WithDefaultProvider()
                 .WithEditStatus(EditStatus.Both)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)

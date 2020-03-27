@@ -25,7 +25,9 @@
 	[AccountLegalEntityPublicHashedId],
 	[AccountLegalEntityId],
 	[IsDraft],
-	[WithParty]
+	[WithParty],
+	[Approvals],
+	[EmployerAndProviderApprovedOn]
 )
 VALUES
 (
@@ -54,5 +56,7 @@ VALUES
 	@AccountLegalEntityPublicHashedId,
 	@AccountLegalEntityId,
 	@IsDraft,
-	@WithParty
+	@WithParty,
+	@Approvals,
+	@EmployerAndProviderApprovedOn
 )

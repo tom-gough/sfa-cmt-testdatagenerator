@@ -18,6 +18,8 @@ namespace ScenarioBuilder.Models
         public CommitmentStatus CommitmentStatus { get; set; }
         public EditStatus EditStatus { get; set; }
         public Party WithParty { get; set; }
+        public Party Approvals { get; set; }
+        public DateTime? EmployerAndProviderApprovedOn { get; set; }
         public DateTime CreatedOn { get; set; }
         public LastAction LastAction { get; set; }
         public bool IsDraft { get; set; }

@@ -170,8 +170,17 @@ namespace ScenarioBuilder.Builders
 
         public CohortBuilder WithApprenticeshipAgreementStatus(AgreementStatus status)
         {
-            AgreementStatus = status;
-            return this;
+            switch (status)
+            {
+                case AgreementStatus.BothAgreed:
+                    return WithApprovals(Party.Employer | Party.Provider);
+                case AgreementStatus.EmployerAgreed:
+                    return WithApprovals(Party.Employer);
+                case AgreementStatus.ProviderAgreed:
+                    return WithApprovals(Party.Provider);
+                default:
+                    return this;
+            }
         }
 
         public CohortBuilder WithReservations()
@@ -232,9 +241,6 @@ namespace ScenarioBuilder.Builders
                 DbHelper.CreateMessages(_commitment, Messages);
             }
 
-            //DbHelper.CalculatePaymentOrders(_commitment.EmployerAccountId);
-
-
             return _commitment;
         }
 
@@ -268,6 +274,13 @@ namespace ScenarioBuilder.Builders
         public CohortBuilder WithMessages(int numberOfMessages)
         {
             Messages = numberOfMessages;
+            return this;
+        }
+
+        public CohortBuilder WithApprovals(Party approvingParties)
+        {
+            _commitment.Approvals = approvingParties;
+            _commitment.EmployerAndProviderApprovedOn = DateTime.UtcNow;
             return this;
         }
     }
