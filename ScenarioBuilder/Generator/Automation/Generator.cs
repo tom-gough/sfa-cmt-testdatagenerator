@@ -13,7 +13,7 @@ namespace ScenarioBuilder.Generator.Automation
             builder
                 .WithDefaultProvider()
                 .WithDefaultEmployer()
-                .WithEditStatus(EditStatus.Provider)
+                .WithParty(Party.Provider)
                 .WithLastAction(LastAction.None)
                 .WithCommitmentStatus(CommitmentStatus.New)
                 .WithApprenticeships(size);
@@ -33,7 +33,7 @@ namespace ScenarioBuilder.Generator.Automation
             builder
                 .WithDefaultProvider()
                 .WithDefaultEmployer()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.Employer)
                 .WithLastAction(LastAction.None)
                 .WithCommitmentStatus(CommitmentStatus.New)
                 .WithApprenticeships(size);
@@ -54,10 +54,10 @@ namespace ScenarioBuilder.Generator.Automation
             builder
                 .WithNonLevyEmployer()
                 .WithDefaultProvider()
-                .WithEditStatus(EditStatus.Both)
-                .WithLastAction(LastAction.Approve)
+                .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)
-                .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
+                .WithLastAction(LastAction.Approve)
+                //.WithApprenticeshipPaymentStatus(PaymentStatus.Active) //with stop option will override this
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
                         .WithUln("1000001880")

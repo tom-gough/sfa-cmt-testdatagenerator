@@ -17,7 +17,7 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Provider)
+                .WithParty(Party.Provider)
                 .WithLastAction(LastAction.Amend)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
@@ -29,8 +29,8 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Provider)
-                .WithLastAction(LastAction.Approve)
+                .WithParty(Party.Provider)
+                .WithLastAction(LastAction.Amend)
                 .WithLastUpdatedByEmployer("Chris", "chrisfoster186@googlemail.com")
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
@@ -42,9 +42,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Provider)
+                .WithParty(Party.Provider)
+                .WithApprovals(Party.Employer)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.EmployerAgreed)
                 .WithLastUpdatedByEmployer("Chris", "chrisfoster186@googlemail.com")
                 .WithApprenticeships(1000);
             builder.Build();
@@ -58,7 +58,7 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.Employer)
                 .WithLastAction(LastAction.None)
                 .WithCommitmentStatus(CommitmentStatus.New)
                 .WithTransferSender(8194, "Mega Corp", null)
@@ -68,13 +68,12 @@ namespace ScenarioBuilder.Generator
  
         public static void Scenario_Cohort_Employer_Draft()
         {
-
             var builder = new CohortBuilder();
 
             builder
                 .WithDefaultProvider()
                 .WithDefaultEmployer()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.Employer)
                 .WithLastAction(LastAction.None)
                 .WithCommitmentStatus(CommitmentStatus.New)
                 .WithApprenticeships(10);
@@ -88,10 +87,10 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.Employer)
+                .WithApprovals(Party.Provider)
                 .WithLastAction(LastAction.Approve)
                 .WithCommitmentStatus(CommitmentStatus.Active)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.ProviderAgreed)
                 .WithApprenticeships(10);
             builder.Build();
         }
@@ -103,9 +102,9 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithDefaultEmployer()
-                .WithEditStatus(EditStatus.Provider)
+                .WithParty(Party.Provider)
+                .WithApprovals(Party.Employer)
                 .WithLastAction(LastAction.Amend)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.EmployerAgreed)
                 .WithCommitmentStatus(CommitmentStatus.Active)
                 .WithApprenticeships(10);
             builder.Build();
@@ -119,11 +118,10 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Provider)
+                .WithParty(Party.Provider)
+                .WithApprovals(Party.Employer)
                 .WithLastAction(LastAction.Approve)
                 .WithCommitmentStatus(CommitmentStatus.Active)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .EmployerAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
@@ -136,11 +134,10 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.Employer)
+                .WithApprovals(Party.Provider)
                 .WithLastAction(LastAction.Approve)
                 .WithCommitmentStatus(CommitmentStatus.Active)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .ProviderAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
@@ -157,11 +154,10 @@ namespace ScenarioBuilder.Generator
                 builder
                     .WithDefaultProvider()
                     .WithNonLevyEmployer()
-                    .WithEditStatus(EditStatus.Employer)
+                    .WithParty(Party.Employer)
+                    .WithApprovals(Party.Provider)
                     .WithLastAction(LastAction.Approve)
                     .WithCommitmentStatus(CommitmentStatus.Active)
-                    .WithApprenticeshipAgreementStatus(AgreementStatus
-                        .ProviderAgreed) //todo: move these status fields into WithApprenticeships() method?
                     .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder))
                     .WithMessages(10);
                 builder.Build();
@@ -170,21 +166,17 @@ namespace ScenarioBuilder.Generator
 
         public static void Scenario_Cohort_With_NonLevy_Employer_Draft()
         {
-
             var builder = new CohortBuilder();
 
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.Employer)
                 .WithLastAction(LastAction.None)
                 .WithCommitmentStatus(CommitmentStatus.New)
                 .WithApprenticeships(10);
             builder.Build();
-
         }
-
-
 
         public static void Scenario_Transfer_Cohort_Rejected_By_Sender()
         {
@@ -194,7 +186,8 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.Employer)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Rejected)
                 .WithApprenticeships(10);
@@ -210,7 +203,8 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.TransferSender)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.PendingApproval, DateTime.UtcNow)
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending)
@@ -228,9 +222,10 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithNonLevyEmployer()
                 .WithDefaultProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.TransferSender)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending)
+                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending) //todo: refactor this so that status is based on being with transfer sender
                 .WithApprenticeships(10)
                 .WithFundingCapWarning();
             builder.Build();
@@ -243,10 +238,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeships(1);
             builder.Build();
@@ -261,10 +255,9 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithReservations()
                 .WithApprenticeships(1);
@@ -281,10 +274,9 @@ namespace ScenarioBuilder.Generator
                 .WithNonLevyEmployer()
                 .WithDefaultProvider()
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider | Party.TransferSender)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeships(50);
             builder.Build();
@@ -299,10 +291,8 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultEmployer()
                 .WithProvider(99999999, "Bad Provider")
-                .WithEditStatus(EditStatus.Both)
-                .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeships(50);
             builder.Build();
@@ -316,10 +306,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -341,10 +330,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -367,10 +355,9 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultEmployerProvider()
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -393,10 +380,9 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultEmployerProvider()
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Approved)
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -415,9 +401,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -435,9 +421,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -456,9 +442,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -477,9 +463,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -497,9 +483,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -513,15 +499,14 @@ namespace ScenarioBuilder.Generator
 
         public static void PriceDataLockAndPendingChangeOfCircumstances()
         {
-
             var builder = new CohortBuilder();
 
             builder
                 .WithNonLevyEmployer()
                 .WithDefaultProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -531,11 +516,7 @@ namespace ScenarioBuilder.Generator
                         .WithChangeOfCircumstances(Originator.Employer)
                 );
             builder.Build();
-
-
-
         }
-
 
         public static void NonLevy_PendingChangeOfCircumstances_EmployerOriginated()
         {
@@ -545,9 +526,9 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithNonLevyEmployer()
                 .WithDefaultProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -565,9 +546,9 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithNonLevyEmployer()
                 .WithDefaultProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -584,9 +565,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -601,9 +582,9 @@ namespace ScenarioBuilder.Generator
             builder = new CohortBuilder();
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Provider)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.EmployerAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.PendingApproval)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -619,9 +600,9 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -636,9 +617,9 @@ namespace ScenarioBuilder.Generator
             builder = new CohortBuilder();
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -657,9 +638,9 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultEmployerProvider()
                 .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending)
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.PendingApproval)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -672,9 +653,8 @@ namespace ScenarioBuilder.Generator
             builder = new CohortBuilder();
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.Employer)
                 .WithLastAction(LastAction.None)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.NotAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.PendingApproval)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -689,10 +669,9 @@ namespace ScenarioBuilder.Generator
             var builder = new CohortBuilder();
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus
-                    .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder).WithStartOption(new DateTime(2018, 9, 1)));
@@ -710,10 +689,9 @@ namespace ScenarioBuilder.Generator
                 {
                     builder
                         .WithDefaultEmployerProvider()
-                        .WithEditStatus(EditStatus.Both)
+                        .WithParty(Party.None)
+                        .WithApprovals(Party.Employer | Party.Provider)
                         .WithLastAction(LastAction.Approve)
-                        .WithApprenticeshipAgreementStatus(AgreementStatus
-                            .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                         .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                         .WithApprenticeships(1);
                 }
@@ -733,10 +711,9 @@ namespace ScenarioBuilder.Generator
 
                     builder
                         .WithDefaultEmployerProvider()
-                        .WithEditStatus(EditStatus.Both)
+                        .WithParty(Party.None)
+                        .WithApprovals(Party.Employer | Party.Provider)
                         .WithLastAction(LastAction.Approve)
-                        .WithApprenticeshipAgreementStatus(AgreementStatus
-                            .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                         .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                         .WithApprenticeship(cohort =>
                             new ApprenticeshipBuilder(builder)
@@ -758,10 +735,9 @@ namespace ScenarioBuilder.Generator
                     builder
                         .WithNonLevyEmployer()
                         .WithDefaultProvider()
-                        .WithEditStatus(EditStatus.Both)
+                        .WithParty(Party.None)
+                        .WithApprovals(Party.Employer | Party.Provider)
                         .WithLastAction(LastAction.Approve)
-                        .WithApprenticeshipAgreementStatus(AgreementStatus
-                            .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                         .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                         .WithApprenticeships(1);
                 }
@@ -782,10 +758,9 @@ namespace ScenarioBuilder.Generator
                     builder
                         .WithNonLevyEmployer()
                         .WithDefaultProvider()
-                        .WithEditStatus(EditStatus.Both)
+                        .WithParty(Party.None)
+                        .WithApprovals(Party.Employer | Party.Provider)
                         .WithLastAction(LastAction.Approve)
-                        .WithApprenticeshipAgreementStatus(AgreementStatus
-                            .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
                         .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                         .WithApprenticeship(cohort =>
                             new ApprenticeshipBuilder(builder)
@@ -797,20 +772,16 @@ namespace ScenarioBuilder.Generator
         }
 
 
-
-
         public static void Apprentice_Stopped_And_Restarted_NonLevy()
         {
-            
-
             var builder = new CohortBuilder();
 
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Both)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -825,9 +796,9 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultProvider()
                 .WithNonLevyEmployer()
-                .WithEditStatus(EditStatus.Employer)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
@@ -835,10 +806,7 @@ namespace ScenarioBuilder.Generator
                         .WithStartOption(new DateTime(2018, 6, 1))
                 );
             builder.Build();
-
         }
-
-
 
         public static void Scenario_Very_Large_Cohort()
         {
@@ -846,8 +814,8 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Provider)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.EmployerAgreed)
+                .WithParty(Party.Provider)
+                .WithApprovals(Party.Employer)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeships(500);
             builder.Build();
@@ -859,8 +827,8 @@ namespace ScenarioBuilder.Generator
 
             builder
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Employer)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.ProviderAgreed)
+                .WithParty(Party.Employer)
+                .WithApprovals(Party.Provider)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeships(500);
             builder.Build();
@@ -874,10 +842,8 @@ namespace ScenarioBuilder.Generator
 
                 builder
                     .WithDefaultEmployerProvider()
-                    .WithEditStatus(EditStatus.Both)
-                    .WithLastAction(LastAction.Approve)
-                    .WithApprenticeshipAgreementStatus(AgreementStatus
-                        .BothAgreed) //todo: move these status fields into WithApprenticeships() method?
+                    .WithParty(Party.None)
+                    .WithApprovals(Party.Employer | Party.Provider)
                     .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                     .WithApprenticeships(1000);
                 builder.Build();
@@ -888,8 +854,8 @@ namespace ScenarioBuilder.Generator
 
             builder2
                 .WithDefaultEmployerProvider()
-                .WithEditStatus(EditStatus.Employer)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.ProviderAgreed)
+                .WithParty(Party.Employer)
+                .WithApprovals(Party.Provider)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeships(1);
             builder2.Build();
@@ -903,8 +869,8 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultEmployer()
                 .WithDefaultProvider()
-                .WithEditStatus(EditStatus.Both)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeships(1);
@@ -915,8 +881,8 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithDefaultEmployer()
                 .WithProvider(10005077, "Train-U-Good Corporation")
-                .WithEditStatus(EditStatus.Both)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeships(1);
@@ -926,8 +892,8 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7", 645)
                 .WithDefaultProvider()
-                .WithEditStatus(EditStatus.Both)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeships(1);
@@ -937,15 +903,13 @@ namespace ScenarioBuilder.Generator
             builder
                 .WithEmployer(30060, "06344082", "Rapid Logistics Co Ltd", "7EKPG7", 645)
                 .WithProvider(10005077, "Train-U-Good Corporation")
-                .WithEditStatus(EditStatus.Both)
-                .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
                 .WithApprenticeshipPaymentStatus(PaymentStatus.Active)
                 .WithLastAction(LastAction.Approve)
                 .WithApprenticeships(1);
             builder.Build();
-
         }
-
 
         public static void EmployerWithMultipleProviders()
         {
@@ -970,9 +934,9 @@ namespace ScenarioBuilder.Generator
                 builder
                     .WithDefaultEmployer()
                     .WithProvider(providerId, providerName)
-                    .WithEditStatus(EditStatus.Both)
+                    .WithParty(Party.None)
+                    .WithApprovals(Party.Employer | Party.Provider)
                     .WithLastAction(LastAction.Approve)
-                    .WithApprenticeshipAgreementStatus(AgreementStatus.BothAgreed)
                     .WithApprenticeshipPaymentStatus(PaymentStatus.Active, DataHelper.GetRandomDateTime())
                     .WithApprenticeships(3);
                 builder.Build();

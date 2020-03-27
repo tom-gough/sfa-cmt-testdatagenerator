@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using ScenarioBuilder.Helpers;
 using ScenarioBuilder.Models;
 
@@ -114,25 +113,9 @@ namespace ScenarioBuilder.Builders
             return this;
         }
 
-        public CohortBuilder WithEditStatus(EditStatus status)
+        public CohortBuilder WithParty(Party assignedParty)
         {
-            _commitment.EditStatus = status;
-
-            //todo: this doesn't work with transfer sender
-            if (status == EditStatus.Employer)
-            {
-                _commitment.WithParty = Party.Employer;
-            }
-            else if (status == EditStatus.Provider)
-            {
-                _commitment.WithParty = Party.Provider;
-            }
-            else
-            {
-                _commitment.WithParty = Party.TransferSender;
-                //throw new NotImplementedException();
-            }
-
+            _commitment.WithParty = assignedParty;
             return this;
         }
 
@@ -166,21 +149,6 @@ namespace ScenarioBuilder.Builders
         {
             HasFundingCapWarning = true;
             return this;
-        }
-
-        public CohortBuilder WithApprenticeshipAgreementStatus(AgreementStatus status)
-        {
-            switch (status)
-            {
-                case AgreementStatus.BothAgreed:
-                    return WithApprovals(Party.Employer | Party.Provider);
-                case AgreementStatus.EmployerAgreed:
-                    return WithApprovals(Party.Employer);
-                case AgreementStatus.ProviderAgreed:
-                    return WithApprovals(Party.Provider);
-                default:
-                    return this;
-            }
         }
 
         public CohortBuilder WithReservations()
@@ -280,7 +248,12 @@ namespace ScenarioBuilder.Builders
         public CohortBuilder WithApprovals(Party approvingParties)
         {
             _commitment.Approvals = approvingParties;
-            _commitment.EmployerAndProviderApprovedOn = DateTime.UtcNow;
+
+            if (approvingParties.HasFlag(Party.Employer) && approvingParties.HasFlag(Party.Provider))
+            {
+                _commitment.EmployerAndProviderApprovedOn = DateTime.UtcNow;
+            }
+
             return this;
         }
     }
