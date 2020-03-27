@@ -219,9 +219,10 @@ namespace ScenarioBuilder.Builders
             return this;
         }
 
-        public CohortBuilder WithCommitmentStatus(CommitmentStatus status)
+        public CohortBuilder WithIsDraft(bool isDraft)
         {
-            _commitment.CommitmentStatus = status;
+            _commitment.IsDraft = isDraft;
+            _commitment.LastAction = LastAction.Amend; //arbitrary value
             return this;
         }
 

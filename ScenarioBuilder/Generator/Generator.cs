@@ -60,7 +60,6 @@ namespace ScenarioBuilder.Generator
                 .WithNonLevyEmployer()
                 .WithParty(Party.Employer)
                 .WithLastAction(LastAction.None)
-                .WithCommitmentStatus(CommitmentStatus.New)
                 .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeships(10);
             builder.Build();
@@ -75,7 +74,6 @@ namespace ScenarioBuilder.Generator
                 .WithDefaultEmployer()
                 .WithParty(Party.Employer)
                 .WithLastAction(LastAction.None)
-                .WithCommitmentStatus(CommitmentStatus.New)
                 .WithApprenticeships(10);
             builder.Build();
         }
@@ -90,7 +88,6 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.Employer)
                 .WithApprovals(Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithCommitmentStatus(CommitmentStatus.Active)
                 .WithApprenticeships(10);
             builder.Build();
         }
@@ -105,7 +102,6 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.Provider)
                 .WithApprovals(Party.Employer)
                 .WithLastAction(LastAction.Amend)
-                .WithCommitmentStatus(CommitmentStatus.Active)
                 .WithApprenticeships(10);
             builder.Build();
         }
@@ -121,7 +117,6 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.Provider)
                 .WithApprovals(Party.Employer)
                 .WithLastAction(LastAction.Approve)
-                .WithCommitmentStatus(CommitmentStatus.Active)
                 .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
@@ -137,7 +132,6 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.Employer)
                 .WithApprovals(Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithCommitmentStatus(CommitmentStatus.Active)
                 .WithTransferSender(8194, "Mega Corp", null)
                 .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder));
             builder.Build();
@@ -157,7 +151,6 @@ namespace ScenarioBuilder.Generator
                     .WithParty(Party.Employer)
                     .WithApprovals(Party.Provider)
                     .WithLastAction(LastAction.Approve)
-                    .WithCommitmentStatus(CommitmentStatus.Active)
                     .WithApprenticeship(cohort => new ApprenticeshipBuilder(builder))
                     .WithMessages(10);
                 builder.Build();
@@ -173,7 +166,6 @@ namespace ScenarioBuilder.Generator
                 .WithNonLevyEmployer()
                 .WithParty(Party.Employer)
                 .WithLastAction(LastAction.None)
-                .WithCommitmentStatus(CommitmentStatus.New)
                 .WithApprenticeships(10);
             builder.Build();
         }

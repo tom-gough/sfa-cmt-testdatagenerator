@@ -14,8 +14,7 @@ namespace ScenarioBuilder.Generator.Automation
                 .WithDefaultProvider()
                 .WithDefaultEmployer()
                 .WithParty(Party.Provider)
-                .WithLastAction(LastAction.None)
-                .WithCommitmentStatus(CommitmentStatus.New)
+                .WithIsDraft(true)
                 .WithApprenticeships(size);
 
             if (nonLevyEmployer)
@@ -34,8 +33,7 @@ namespace ScenarioBuilder.Generator.Automation
                 .WithDefaultProvider()
                 .WithDefaultEmployer()
                 .WithParty(Party.Employer)
-                .WithLastAction(LastAction.None)
-                .WithCommitmentStatus(CommitmentStatus.New)
+                .WithIsDraft(true)
                 .WithApprenticeships(size);
 
             if (nonLevyEmployer)
@@ -56,8 +54,6 @@ namespace ScenarioBuilder.Generator.Automation
                 .WithDefaultProvider()
                 .WithParty(Party.None)
                 .WithApprovals(Party.Employer | Party.Provider)
-                .WithLastAction(LastAction.Approve)
-                //.WithApprenticeshipPaymentStatus(PaymentStatus.Active) //with stop option will override this
                 .WithApprenticeship(cohort =>
                     new ApprenticeshipBuilder(builder)
                         .WithUln("1000001880")
