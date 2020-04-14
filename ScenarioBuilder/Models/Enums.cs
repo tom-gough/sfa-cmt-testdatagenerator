@@ -50,7 +50,7 @@ namespace ScenarioBuilder.Models
         PendingApproval = 0,
         Active = 1,
         Paused = 2,
-        Cancelled = 3,
+        Stopped = 3,
         Completed = 4,
         Deleted = 5
     }
@@ -77,5 +77,11 @@ namespace ScenarioBuilder.Models
         Employer = 1,
         Provider = 2,
         TransferSender = 4
+    }
+
+    public enum ApprenticeshipEmployerType : byte
+    {
+        NonLevy = 0,
+        Levy = 1
     }
 }
