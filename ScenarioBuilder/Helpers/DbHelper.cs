@@ -30,6 +30,8 @@ namespace ScenarioBuilder.Helpers
             connection.Execute("delete from ChangeOfPartyRequest");
             connection.Execute("delete from Apprenticeship");
             connection.Execute("delete from Commitment");
+            connection.Execute("delete from OutboxData");
+            connection.Execute("delete from ClientOutboxData");
 
             connection.Execute("DBCC CHECKIDENT ('[Commitment]', RESEED, 0);");
             connection.Execute("DBCC CHECKIDENT ('[Apprenticeship]', RESEED, 0);");

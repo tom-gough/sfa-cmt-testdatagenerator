@@ -88,7 +88,7 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.Employer)
                 .WithApprovals(Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithApprenticeships(10);
+                .WithApprenticeships(1);
             builder.Build();
         }
 
