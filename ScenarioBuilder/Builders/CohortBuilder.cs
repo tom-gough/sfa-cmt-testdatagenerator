@@ -197,6 +197,11 @@ namespace ScenarioBuilder.Builders
                 {
                     DbHelper.CreateChangeOfCircumstances(apprenticeship, apprenticeship.ChangeOfCircumstancesOriginator);
                 }
+
+                foreach (var cop in apprenticeship.ChangeOfPartyRequests)
+                {
+                    DbHelper.SaveChangeOfPartyRequest(cop);
+                }
             }
 
             if (_commitment.TransferApprovalStatus.HasValue)

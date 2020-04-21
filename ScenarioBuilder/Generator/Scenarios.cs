@@ -52,7 +52,9 @@ namespace ScenarioBuilder.Generator
                 new Scenario("ManyApproved_And_Very_Large_Cohort_Ready_For_Employer", Generator.ManyApproved_And_Very_Large_Cohort_Ready_For_Employer),
                 new Scenario("Employer With Multiple Providers", Generator.EmployerWithMultipleProviders),
                 new Scenario("Employer With Multiple Providers V2", Generator.EmployerWithMultipleProvidersV2),
-                new Scenario("Apprentice_Stopped_And_Restarted_NonLevy", Generator.Apprentice_Stopped_And_Restarted_NonLevy)
+                new Scenario("Apprentice_Stopped_And_Restarted_NonLevy", Generator.Apprentice_Stopped_And_Restarted_NonLevy),
+                new Scenario("Stopped apprenticeship (nonlevy)", Generator.Apprentice_Stopped_NonLevy),
+                new Scenario("Stopped apprenticeship with Change of Party Request (nonlevy)", Generator.Apprentice_Stopped_WithChangeOfPartyRequest_NonLevy),
             };
         }
 

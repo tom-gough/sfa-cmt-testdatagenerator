@@ -64,7 +64,7 @@ namespace ScenarioBuilder.Generator
                 .WithApprenticeships(10);
             builder.Build();
         }
- 
+
         public static void Scenario_Cohort_Employer_Draft()
         {
             var builder = new CohortBuilder();
@@ -217,7 +217,9 @@ namespace ScenarioBuilder.Generator
                 .WithParty(Party.TransferSender)
                 .WithApprovals(Party.Employer | Party.Provider)
                 .WithLastAction(LastAction.Approve)
-                .WithTransferSender(8194, "Mega Corp", TransferApprovalStatus.Pending) //todo: refactor this so that status is based on being with transfer sender
+                .WithTransferSender(8194, "Mega Corp",
+                    TransferApprovalStatus
+                        .Pending) //todo: refactor this so that status is based on being with transfer sender
                 .WithApprenticeships(10)
                 .WithFundingCapWarning();
             builder.Build();
@@ -933,6 +935,47 @@ namespace ScenarioBuilder.Generator
                     .WithApprenticeships(3);
                 builder.Build();
             }
+        }
+
+
+        public static void Apprentice_Stopped_NonLevy()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2019, 6, 1))
+                        .WithStopOption(new DateTime(2020, 3, 1))
+                );
+            builder.Build();
+        }
+
+        public static void Apprentice_Stopped_WithChangeOfPartyRequest_NonLevy()
+        {
+            var builder = new CohortBuilder();
+
+            builder
+                .WithDefaultProvider()
+                .WithNonLevyEmployer()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Cancelled)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder)
+                        .WithStartOption(new DateTime(2019, 6, 1))
+                        .WithStopOption(new DateTime(2020, 3, 1))
+                        .WithChangeOfPartyRequest()
+                        
+                );
+            builder.Build();
         }
     }
 }
