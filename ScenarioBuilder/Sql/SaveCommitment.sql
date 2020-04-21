@@ -27,7 +27,8 @@
 	[IsDraft],
 	[WithParty],
 	[Approvals],
-	[EmployerAndProviderApprovedOn]
+	[EmployerAndProviderApprovedOn],
+	[ApprenticeshipEmployerTypeOnApproval]
 )
 VALUES
 (
@@ -58,5 +59,6 @@ VALUES
 	@IsDraft,
 	@WithParty,
 	@Approvals,
-	@EmployerAndProviderApprovedOn
+	@EmployerAndProviderApprovedOn,
+	@ApprenticeshipEmployerTypeOnApproval
 )

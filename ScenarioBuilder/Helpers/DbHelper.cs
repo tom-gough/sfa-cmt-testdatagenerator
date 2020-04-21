@@ -27,14 +27,16 @@ namespace ScenarioBuilder.Helpers
             connection.Execute("delete from History");
             connection.Execute("delete from PriceHistory");
             connection.Execute("delete from Message");
+            connection.Execute("delete from ChangeOfPartyRequest");
             connection.Execute("delete from Apprenticeship");
             connection.Execute("delete from Commitment");
+            connection.Execute("delete from OutboxData");
+            connection.Execute("delete from ClientOutboxData");
 
             connection.Execute("DBCC CHECKIDENT ('[Commitment]', RESEED, 0);");
             connection.Execute("DBCC CHECKIDENT ('[Apprenticeship]', RESEED, 0);");
         }
 
-        
 
         public static void SaveCommitment(Commitment cohort)
         {
@@ -50,11 +52,11 @@ namespace ScenarioBuilder.Helpers
             var query = "insert into Apprenticeship " +
                         "([CommitmentId],[FirstName],[LastName],[ULN],[TrainingType],[TrainingCode],[TrainingName],[Cost]" +
                         ",[StartDate],[EndDate],[AgreementStatus],[PaymentStatus],[DateOfBirth],[NINumber],[EmployerRef]" +
-                        ",[ProviderRef],[CreatedOn],[AgreedOn],[PaymentOrder],[StopDate],[PauseDate],[HasHadDataLockSuccess],[PendingUpdateOriginator],[ReservationId])" +
+                        ",[ProviderRef],[CreatedOn],[AgreedOn],[PaymentOrder],[StopDate],[PauseDate],[HasHadDataLockSuccess],[PendingUpdateOriginator],[ReservationId],[CompletionDate])" +
                         "VALUES(" +
                         "@CommitmentId,@FirstName,@LastName, @ULN, @TrainingType, @TrainingCode,@TrainingName, @Cost,@StartDate," +
                         "@EndDate,@AgreementStatus,@PaymentStatus,@DateOfBirth,@NINumber, @EmployerRef, @ProviderRef, @CreatedOn, @AgreedOn, " +
-                        "@PaymentOrder, @StopDate, @PauseDate, @HasHadDataLockSuccess,@PendingUpdateOriginator,@ReservationId)";
+                        "@PaymentOrder, @StopDate, @PauseDate, @HasHadDataLockSuccess,@PendingUpdateOriginator,@ReservationId,@CompletionDate)";
 
             var result = connection.Execute(query, apprenticeship);
 
