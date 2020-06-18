@@ -690,6 +690,21 @@ namespace ScenarioBuilder.Generator
             builder.Build();
         }
 
+        public static void SinglePaused()
+        {
+            var builder = new CohortBuilder();
+            builder
+                .WithDefaultEmployerProvider()
+                .WithParty(Party.None)
+                .WithApprovals(Party.Employer | Party.Provider)
+                .WithLastAction(LastAction.Approve)
+                .WithApprenticeshipPaymentStatus(PaymentStatus.Paused)
+                .WithApprenticeship(cohort =>
+                    new ApprenticeshipBuilder(builder).WithStartOption(new DateTime(2018, 9, 1)));
+
+            builder.Build();
+        }
+
         public static void Single_Complete_NonLevy()
         {
             var builder = new CohortBuilder();

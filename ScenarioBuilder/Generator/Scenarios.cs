@@ -54,7 +54,8 @@ namespace ScenarioBuilder.Generator
                 new Scenario("Employer With Multiple Providers V2", Generator.EmployerWithMultipleProvidersV2),
                 new Scenario("Apprentice_Stopped_And_Restarted_NonLevy", Generator.Apprentice_Stopped_And_Restarted_NonLevy),
                 new Scenario("Single stopped apprentice (non levy)", Generator.Single_Stopped_NonLevy),
-                new Scenario("Single complete apprentice (non levy)", Generator.Single_Complete_NonLevy)
+                new Scenario("Single complete apprentice (non levy)", Generator.Single_Complete_NonLevy),
+                new Scenario("Single paused apprentice", Generator.SinglePaused),
             };
         }
 
